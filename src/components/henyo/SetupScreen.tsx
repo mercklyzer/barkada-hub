@@ -154,7 +154,7 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
             w-full py-5 rounded-2xl font-black text-2xl tracking-widest
             bg-green-600 hover:bg-green-500 active:bg-green-700
             disabled:opacity-50 disabled:cursor-not-allowed
-            transition-all min-h-[64px]
+            transition-all min-h-16
           "
         >
           {isLoading ? 'LOADING...' : 'MAGLARO'}
