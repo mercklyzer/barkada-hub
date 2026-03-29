@@ -7,21 +7,31 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "supabase": "./node_modules/supabase/bin/supabase",
+    "supabase:seed": "./node_modules/supabase/bin/supabase db query < supabase/seed.sql",
+    "seed:staging": "bash scripts/seed.sh .env.local",
+    "seed:production": "bash scripts/seed.sh .env.production"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.100.1",
+    "@tailwindcss/cli": "^4.2.2",
+    "@tailwindcss/oxide-darwin-arm64": "^4.2.2",
     "next": "16.2.1",
+    "postcss": "^8.5.8",
+    "posthog-js": "^1.364.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^20.19.37",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
-    "tailwindcss": "^4",
+    "supabase": "^2.84.4",
+    "tailwindcss": "^4.2.2",
     "typescript": "^5"
   }
 }
