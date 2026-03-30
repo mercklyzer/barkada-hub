@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get('category') ?? 'random'
   const limitParam = Number(searchParams.get('limit') ?? '20')
   const limit = Math.max(10, limitParam)
-  const difficulty = searchParams.get('difficulty')
 
   const supabase = getSupabase()
 
@@ -30,10 +29,6 @@ export async function GET(request: NextRequest) {
 
       if (category !== 'random') {
         query = query.eq('category', category)
-      }
-
-      if (difficulty) {
-        query = query.eq('difficulty', difficulty)
       }
 
       const { data, error } = await query.limit(limit * 3)
@@ -70,7 +65,6 @@ export async function GET(request: NextRequest) {
   // Fallback to bundled words
   let filtered = (fallbackWords as HenyoWord[]).filter((w) => {
     if (category !== 'random' && w.category !== category) return false
-    if (difficulty && w.difficulty !== difficulty) return false
     return true
   })
 

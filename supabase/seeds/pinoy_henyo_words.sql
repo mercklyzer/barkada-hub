@@ -48,11 +48,11 @@ INSERT INTO henyo_words (word, category) VALUES
   ('Turon', 'pagkain'),
   ('Ginataan', 'pagkain'),
   ('Ube Halaya', 'pagkain'),
-  ('Goto', 'pagkain');
-  ('Spaghetti', 'pagkain');
-  ('Carbonara', 'pagkain');
-  ('Lasagna', 'pagkain');
-  ('Pizza', 'pagkain');
+  ('Goto', 'pagkain'),
+  ('Spaghetti', 'pagkain'),
+  ('Carbonara', 'pagkain'),
+  ('Lasagna', 'pagkain'),
+  ('Pizza', 'pagkain'),
   ('Isaw', 'pagkain');
 
 -- =============================================================
@@ -125,7 +125,7 @@ INSERT INTO henyo_words (word, category) VALUES
   ('Christiano Ronaldo',    'tao'),
   ('Lionel Messi',    'tao'),
   ('The Rock',    'tao'),
-  ('Billie Eilish',    'tao'),
+  ('Billie Eilish',    'tao');
 
 -- =============================================================
 -- hayop (Animal)
@@ -259,30 +259,30 @@ INSERT INTO henyo_words (word, category) VALUES
   ('Intramuros',     'lugar'),
   ('Pinatubo',       'lugar'),
   ('Mayon',          'lugar'),
-  ('Apo',            'lugar');
-  ('Greece',            'lugar');
-  ('America',            'lugar');
-  ('Japan',            'lugar');
-  ('China',            'lugar');
-  ('Tokyo',            'lugar');
-  ('Kyoto',            'lugar');
-  ('Mt. Fuji',            'lugar');
-  ('Bali, Indonesia',            'lugar');
-  ('Paris',            'lugar');
-  ('Egypt',            'lugar');
-  ('Vietnam',            'lugar');
-  ('BGC',            'lugar');
-  ('Sydney',            'lugar');
-  ('Melbourne',            'lugar');
-  ('Vancouver',            'lugar');
-  ('New York',            'lugar');
-  ('Singapore',            'lugar');
-  ('Rome',            'lugar');
-  ('Angkor Wat',            'lugar');
-  ('Machu Picchu',            'lugar');
-  ('Bangkok',            'lugar');
-  ('Thailand',            'lugar');
-  ('Rio de Janeiro, Brazil',            'lugar');
-  ('Hong Kong',            'lugar');
-  ('Burj Khalifa',            'lugar');
+  ('Apo',            'lugar'),
+  ('Greece',            'lugar'),
+  ('America',            'lugar'),
+  ('Japan',            'lugar'),
+  ('China',            'lugar'),
+  ('Tokyo',            'lugar'),
+  ('Kyoto',            'lugar'),
+  ('Mt. Fuji',            'lugar'),
+  ('Bali, Indonesia',            'lugar'),
+  ('Paris',            'lugar'),
+  ('Egypt',            'lugar'),
+  ('Vietnam',            'lugar'),
+  ('BGC',            'lugar'),
+  ('Sydney',            'lugar'),
+  ('Melbourne',            'lugar'),
+  ('Vancouver',            'lugar'),
+  ('New York',            'lugar'),
+  ('Singapore',            'lugar'),
+  ('Rome',            'lugar'),
+  ('Angkor Wat',            'lugar'),
+  ('Machu Picchu',            'lugar'),
+  ('Bangkok',            'lugar'),
+  ('Thailand',            'lugar'),
+  ('Rio de Janeiro, Brazil',            'lugar'),
+  ('Hong Kong',            'lugar'),
+  ('Burj Khalifa',            'lugar'),
   ('Golden State Bridge',            'lugar');
