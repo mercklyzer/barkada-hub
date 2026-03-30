@@ -139,17 +139,17 @@ const MULTI_GAMES: Game[] = [
     status: 'soon',
     players: '4–30 players',
   },
-  {
-    slug: 'boat',
-    icon: '🚣',
-    iconBg: 'rgba(0,56,168,0.15)',
-    nameEn: 'Boat is Sinking',
-    nameFil: 'Lumulubog ang Bangka!',
-    desc: "The host calls a group size — players race to form the right number of groups. Too many or too few in your group? You're out! Last survivor wins.",
-    type: 'multi',
-    status: 'soon',
-    players: '5–30 players',
-  },
+  // {
+  //   slug: 'boat',
+  //   icon: '🚣',
+  //   iconBg: 'rgba(0,56,168,0.15)',
+  //   nameEn: 'Boat is Sinking',
+  //   nameFil: 'Lumulubog ang Bangka!',
+  //   desc: "The host calls a group size — players race to form the right number of groups. Too many or too few in your group? You're out! Last survivor wins.",
+  //   type: 'multi',
+  //   status: 'soon',
+  //   players: '5–30 players',
+  // },
 ]
 
 function GameCard({ game }: { game: Game }) {

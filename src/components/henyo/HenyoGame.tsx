@@ -4,7 +4,6 @@ import { useHenyoGame } from '@/hooks/useHenyoGame'
 import { SetupScreen } from './SetupScreen'
 import { CountdownScreen } from './CountdownScreen'
 import { PlayingScreen } from './PlayingScreen'
-import { ResultScreen } from './ResultScreen'
 import { GameOverScreen } from './GameOverScreen'
 
 export function HenyoGame() {
@@ -18,12 +17,10 @@ export function HenyoGame() {
     passesLeft,
     isLoading,
     error,
-    lastAttempt,
     startGame,
     beginPlaying,
     markCorrect,
     passWord,
-    nextWord,
     restartGame,
     resetToSetup,
   } = game
@@ -51,16 +48,6 @@ export function HenyoGame() {
         passesLeft={passesLeft}
         onCorrect={markCorrect}
         onPass={passWord}
-      />
-    )
-  }
-
-  if (gameState === 'result' && lastAttempt && session) {
-    return (
-      <ResultScreen
-        attempt={lastAttempt}
-        session={session}
-        onNext={nextWord}
       />
     )
   }

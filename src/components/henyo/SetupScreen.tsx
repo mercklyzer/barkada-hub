@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import type { GameSettings, HenyoCategory } from '@/types/henyo'
-import type { Language } from '@/types/shared'
 
 interface Props {
   onStart: (settings: GameSettings) => void
@@ -17,9 +16,6 @@ const CATEGORIES: { key: HenyoCategory; label: string; englishLabel: string; emo
   { key: 'hayop',    label: 'Hayop',    englishLabel: 'Animal',      emoji: '🐾' },
   { key: 'bagay',    label: 'Bagay',    englishLabel: 'Object',      emoji: '📦' },
   { key: 'lugar',    label: 'Lugar',    englishLabel: 'Place',       emoji: '📍' },
-  { key: 'pelikula', label: 'Pelikula', englishLabel: 'Movie/Show',  emoji: '🎬' },
-  { key: 'kanta',    label: 'Kanta',    englishLabel: 'Song',        emoji: '🎵' },
-  { key: 'palaro',   label: 'Palaro',   englishLabel: 'Sport/Game',  emoji: '⚽' },
 ]
 
 const TIMER_OPTIONS = [30, 60, 90, 120]
@@ -29,10 +25,9 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
   const [category, setCategory] = useState<HenyoCategory>('random')
   const [timerSeconds, setTimerSeconds] = useState(60)
   const [wordCount, setWordCount] = useState(5)
-  const [language, setLanguage] = useState<Language>('filipino')
 
   function handleStart() {
-    onStart({ category, timerSeconds, wordCount, language })
+    onStart({ category, timerSeconds, wordCount })
   }
 
   return (
@@ -55,7 +50,7 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
                 onClick={() => setCategory(cat.key)}
                 className={`
                   flex flex-col items-center justify-center py-4 rounded-xl font-bold text-sm
-                  min-h-[72px] transition-all
+                  min-h-18 transition-all
                   ${category === cat.key
                     ? 'bg-blue-600 text-white ring-2 ring-blue-400'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -80,7 +75,7 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
                 key={sec}
                 onClick={() => setTimerSeconds(sec)}
                 className={`
-                  py-4 rounded-xl font-bold text-lg min-h-[56px] transition-all
+                  py-4 rounded-xl font-bold text-lg min-h-14 transition-all
                   ${timerSeconds === sec
                     ? 'bg-blue-600 text-white ring-2 ring-blue-400'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -104,7 +99,7 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
                 key={n}
                 onClick={() => setWordCount(n)}
                 className={`
-                  py-4 rounded-xl font-bold text-2xl min-h-[56px] transition-all
+                  py-4 rounded-xl font-bold text-2xl min-h-14 transition-all
                   ${wordCount === n
                     ? 'bg-blue-600 text-white ring-2 ring-blue-400'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -112,30 +107,6 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
                 `}
               >
                 {n}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Language */}
-        <section>
-          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-            Wika ng mga Salita
-          </h2>
-          <div className="grid grid-cols-3 gap-2">
-            {(['filipino', 'english', 'mixed'] as Language[]).map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setLanguage(lang)}
-                className={`
-                  py-4 rounded-xl font-bold text-sm capitalize min-h-[56px] transition-all
-                  ${language === lang
-                    ? 'bg-blue-600 text-white ring-2 ring-blue-400'
-                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  }
-                `}
-              >
-                {lang === 'filipino' ? 'Filipino' : lang === 'english' ? 'English' : 'Mixed'}
               </button>
             ))}
           </div>
@@ -150,12 +121,7 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
         <button
           onClick={handleStart}
           disabled={isLoading}
-          className="
-            w-full py-5 rounded-2xl font-black text-2xl tracking-widest
-            bg-green-600 hover:bg-green-500 active:bg-green-700
-            disabled:opacity-50 disabled:cursor-not-allowed
-            transition-all min-h-16
-          "
+          className="w-full py-5 rounded-2xl font-black text-2xl tracking-widest bg-green-600 hover:bg-green-500 active:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-16"
         >
           {isLoading ? 'LOADING...' : 'MAGLARO'}
         </button>

@@ -1,5 +1,4 @@
 import type { HenyoWord, HenyoCategory } from '@/types/henyo'
-import type { Language } from '@/types/shared'
 import fallbackWords from './fallback-words.json'
 
 const CACHE_KEY = 'henyo_words_cache'
@@ -9,32 +8,30 @@ interface WordCache {
   words: HenyoWord[]
   fetchedAt: number
   category: string
-  language: string
 }
 
 export async function fetchWords(
   category: HenyoCategory,
-  language: Language,
   limit = 20
 ): Promise<HenyoWord[]> {
   // Check session cache first
-  const cached = getCache(category, language)
+  const cached = getCache(category)
   if (cached) return cached
 
   try {
-    const params = new URLSearchParams({ category, language, limit: String(limit) })
+    const params = new URLSearchParams({ category, limit: String(limit) })
     const res = await fetch(`/api/henyo/words?${params}`)
     if (!res.ok) throw new Error('Failed to fetch words')
 
     const data = await res.json()
-    setCache(category, language, data.words)
+    setCache(category, data.words)
     return data.words as HenyoWord[]
   } catch {
     // Silent fallback — log to PostHog
     if (typeof window !== 'undefined') {
       try {
         const { default: posthog } = await import('posthog-js')
-        posthog.capture('henyo_fallback_words_used', { category, language })
+        posthog.capture('henyo_fallback_words_used', { category })
       } catch {
         // ignore analytics errors
       }
@@ -42,7 +39,6 @@ export async function fetchWords(
 
     let filtered = (fallbackWords as HenyoWord[]).filter((w) => {
       if (category !== 'random' && w.category !== category) return false
-      if (language !== 'mixed' && w.language !== language) return false
       return true
     })
 
@@ -54,14 +50,13 @@ export async function fetchWords(
   }
 }
 
-function getCache(category: string, language: string): HenyoWord[] | null {
+function getCache(category: string): HenyoWord[] | null {
   try {
     const raw = sessionStorage.getItem(CACHE_KEY)
     if (!raw) return null
     const cache: WordCache = JSON.parse(raw)
     if (
       cache.category === category &&
-      cache.language === language &&
       Date.now() - cache.fetchedAt < CACHE_TTL_MS
     ) {
       return cache.words
@@ -72,9 +67,9 @@ function getCache(category: string, language: string): HenyoWord[] | null {
   return null
 }
 
-function setCache(category: string, language: string, words: HenyoWord[]): void {
+function setCache(category: string, words: HenyoWord[]): void {
   try {
-    const cache: WordCache = { words, fetchedAt: Date.now(), category, language }
+    const cache: WordCache = { words, fetchedAt: Date.now(), category }
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache))
   } catch {
     // ignore storage errors

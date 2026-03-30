@@ -15,7 +15,6 @@ function getSupabase() {
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
   const category = searchParams.get('category') ?? 'random'
-  const language = searchParams.get('language') ?? 'filipino'
   const limitParam = Number(searchParams.get('limit') ?? '20')
   const limit = Math.max(10, limitParam)
   const difficulty = searchParams.get('difficulty')
@@ -31,10 +30,6 @@ export async function GET(request: NextRequest) {
 
       if (category !== 'random') {
         query = query.eq('category', category)
-      }
-
-      if (language !== 'mixed') {
-        query = query.eq('language', language)
       }
 
       if (difficulty) {
@@ -56,7 +51,6 @@ export async function GET(request: NextRequest) {
         word: row.word,
         category: row.category,
         difficulty: row.difficulty,
-        language: row.language,
         hint: row.hint ?? undefined,
       }))
 
@@ -76,7 +70,6 @@ export async function GET(request: NextRequest) {
   // Fallback to bundled words
   let filtered = (fallbackWords as HenyoWord[]).filter((w) => {
     if (category !== 'random' && w.category !== category) return false
-    if (language !== 'mixed' && w.language !== language) return false
     if (difficulty && w.difficulty !== difficulty) return false
     return true
   })

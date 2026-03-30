@@ -46,6 +46,7 @@ export function useHenyoGame(): UseHenyoGame {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const sessionRef = useRef<GameSession | null>(null)
   const timerSecondsRef = useRef(0)
+  const wordStartTimeRef = useRef(0)
 
   // Keep sessionRef in sync with state
   useEffect(() => {
@@ -67,10 +68,17 @@ export function useHenyoGame(): UseHenyoGame {
 
     captureEvent('henyo_word_timeout', { word: word.word, category: word.category })
 
-    const attempt: WordAttempt = { word, result: 'timeout', timeUsed: timerSecondsRef.current }
-    setLastAttempt(attempt)
-    setSession((prev) => prev ? { ...prev, attempts: [...prev.attempts, attempt] } : prev)
-    setGameState('result')
+    const attempt: WordAttempt = { word, result: 'timeout', timeUsed: wordStartTimeRef.current }
+    setSession((prev) => {
+      if (!prev) return prev
+      return { ...prev, attempts: [...prev.attempts, attempt] }
+    })
+    captureEvent('henyo_game_completed', {
+      score: sess.score,
+      total_words: sess.settings.wordCount,
+      category: sess.settings.category,
+    })
+    setGameState('game_over')
   }, [stopTimer])
 
   const startTimer = useCallback((seconds: number) => {
@@ -96,12 +104,11 @@ export function useHenyoGame(): UseHenyoGame {
     setIsLoading(true)
     setError(null)
     try {
-      const words = await fetchWords(settings.category, settings.language, settings.wordCount * 3)
+      const words = await fetchWords(settings.category, settings.wordCount * 3)
       const shuffled = shuffle([...words]).slice(0, settings.wordCount)
 
       captureEvent('henyo_game_started', {
         category: settings.category,
-        language: settings.language,
         timer_seconds: settings.timerSeconds,
         word_count: settings.wordCount,
       })
@@ -128,16 +135,16 @@ export function useHenyoGame(): UseHenyoGame {
   const beginPlaying = useCallback(() => {
     const sess = sessionRef.current
     if (!sess) return
+    wordStartTimeRef.current = sess.settings.timerSeconds
     startTimer(sess.settings.timerSeconds)
     setGameState('playing')
   }, [startTimer])
 
   const markCorrect = useCallback(() => {
-    stopTimer()
     const sess = sessionRef.current
     if (!sess) return
     const word = sess.wordQueue[sess.currentIndex]
-    const timeUsed = timerSecondsRef.current - timeLeft
+    const timeUsed = wordStartTimeRef.current - timeLeft
 
     captureEvent('henyo_word_correct', {
       word: word.word,
@@ -147,50 +154,71 @@ export function useHenyoGame(): UseHenyoGame {
     })
 
     const attempt: WordAttempt = { word, result: 'correct', timeUsed }
-    setLastAttempt(attempt)
-    setSession((prev) =>
-      prev ? { ...prev, attempts: [...prev.attempts, attempt], score: prev.score + 1 } : prev
-    )
-    setGameState('result')
+    const nextIndex = sess.currentIndex + 1
+    const isLastWord = nextIndex >= sess.settings.wordCount
+
+    if (isLastWord) {
+      stopTimer()
+      setSession((prev) =>
+        prev ? { ...prev, attempts: [...prev.attempts, attempt], score: prev.score + 1, currentIndex: nextIndex } : prev
+      )
+      captureEvent('henyo_game_completed', {
+        score: sess.score + 1,
+        total_words: sess.settings.wordCount,
+        category: sess.settings.category,
+      })
+      setGameState('game_over')
+    } else {
+      wordStartTimeRef.current = timeLeft
+      setSession((prev) =>
+        prev ? { ...prev, attempts: [...prev.attempts, attempt], score: prev.score + 1, currentIndex: nextIndex } : prev
+      )
+    }
   }, [stopTimer, timeLeft])
 
   const passWord = useCallback(() => {
     const sess = sessionRef.current
     if (!sess || sess.passesUsed >= MAX_PASSES) return
 
-    stopTimer()
     const word = sess.wordQueue[sess.currentIndex]
     captureEvent('henyo_word_passed', { word: word.word, category: word.category })
 
     const attempt: WordAttempt = {
       word,
       result: 'passed',
-      timeUsed: timerSecondsRef.current - timeLeft,
+      timeUsed: wordStartTimeRef.current - timeLeft,
     }
-    setLastAttempt(attempt)
-    setSession((prev) =>
-      prev ? { ...prev, attempts: [...prev.attempts, attempt], passesUsed: prev.passesUsed + 1 } : prev
-    )
-    setGameState('result')
+    const nextIndex = sess.currentIndex + 1
+    const isLastWord = nextIndex >= sess.settings.wordCount
+
+    if (isLastWord) {
+      stopTimer()
+      setSession((prev) =>
+        prev ? { ...prev, attempts: [...prev.attempts, attempt], passesUsed: prev.passesUsed + 1, currentIndex: nextIndex } : prev
+      )
+      captureEvent('henyo_game_completed', {
+        score: sess.score,
+        total_words: sess.settings.wordCount,
+        category: sess.settings.category,
+      })
+      setGameState('game_over')
+    } else {
+      wordStartTimeRef.current = timeLeft
+      setSession((prev) =>
+        prev ? { ...prev, attempts: [...prev.attempts, attempt], passesUsed: prev.passesUsed + 1, currentIndex: nextIndex } : prev
+      )
+    }
   }, [stopTimer, timeLeft])
 
   const nextWord = useCallback(() => {
     const sess = sessionRef.current
     if (!sess) return
-    const nextIndex = sess.currentIndex + 1
-    if (nextIndex >= sess.settings.wordCount) {
-      captureEvent('henyo_game_completed', {
-        score: sess.score,
-        total_words: sess.settings.wordCount,
-        category: sess.settings.category,
-        language: sess.settings.language,
-      })
-      setGameState('game_over')
-    } else {
-      setSession((prev) => prev ? { ...prev, currentIndex: nextIndex } : prev)
-      setLastAttempt(null)
-      setGameState('countdown')
-    }
+    captureEvent('henyo_game_completed', {
+      score: sess.score,
+      total_words: sess.settings.wordCount,
+      category: sess.settings.category,
+    })
+    setGameState('game_over')
   }, [])
 
   const restartGame = useCallback(() => {

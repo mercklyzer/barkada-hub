@@ -11,9 +11,6 @@ export type HenyoCategory =
   | 'lugar'
   | 'hayop'
   | 'pagkain'
-  | 'pelikula'
-  | 'kanta'
-  | 'palaro'
   | 'random'
 
 export interface HenyoWord {
@@ -21,7 +18,6 @@ export interface HenyoWord {
   word: string
   category: HenyoCategory
   difficulty: Difficulty
-  language: Language
   hint?: string
 }
 
@@ -29,7 +25,6 @@ export interface GameSettings {
   category: HenyoCategory
   timerSeconds: number
   wordCount: number
-  language: Language
 }
 
 export interface WordAttempt {
