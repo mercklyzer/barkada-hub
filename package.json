@@ -9,6 +9,8 @@
     "lint": "biome check",
     "format": "biome format --write",
     "supabase": "./node_modules/supabase/bin/supabase",
+    "supabase:link": "./node_modules/supabase/bin/supabase link",
+    "supabase:push": "./node_modules/supabase/bin/supabase db push",
     "supabase:seed": "./node_modules/supabase/bin/supabase db query < supabase/seed.sql",
     "seed:staging": "bash scripts/seed.sh .env.local",
     "seed:production": "bash scripts/seed.sh .env.production"
