@@ -5,7 +5,7 @@ const STATS = [
   { num: "Free", label: "Forever" },
 ];
 
-export function Stats() {
+export const Stats = () => {
   return (
     <div
       className="flex gap-8 justify-center flex-wrap px-6 py-6 mb-12"
@@ -33,4 +33,4 @@ export function Stats() {
       ))}
     </div>
   );
-}
+};

@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import type { Filter, Lang } from "@/lib/home/games";
 import { Footer } from "@/components/home/Footer";
 import { Games } from "@/components/home/Games";
 import { Hero } from "@/components/home/Hero";
 import { Nav } from "@/components/home/Nav";
 import { Stats } from "@/components/home/Stats";
+import type { Filter, Lang } from "@/lib/home/games";
 
-export default function HomePage() {
+const HomePage = () => {
   const [lang, setLang] = useState<Lang>("en");
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -21,4 +21,6 @@ export default function HomePage() {
       <Footer />
     </>
   );
-}
+};
+
+export default HomePage;

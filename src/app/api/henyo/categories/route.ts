@@ -1,4 +1,4 @@
-function getSupabase() {
+const getSupabase = () => {
   try {
     const { supabase } = require("@/lib/supabase") as {
       supabase: import("@supabase/supabase-js").SupabaseClient;
@@ -7,7 +7,7 @@ function getSupabase() {
   } catch {
     return null;
   }
-}
+};
 
 const CATEGORY_META: Record<string, { label: string; englishLabel: string }> = {
   tao: { label: "Tao", englishLabel: "Person" },
@@ -20,7 +20,7 @@ const CATEGORY_META: Record<string, { label: string; englishLabel: string }> = {
   palaro: { label: "Palaro", englishLabel: "Sport / Game" },
 };
 
-export async function GET() {
+export const GET = async () => {
   const supabase = getSupabase();
 
   if (supabase) {
@@ -58,4 +58,4 @@ export async function GET() {
     count: 0,
   }));
   return Response.json({ categories });
-}
+};

@@ -1,4 +1,4 @@
-export function Footer() {
+export const Footer = () => {
   return (
     <footer
       className="px-6 py-7 text-center text-[0.82rem]"
@@ -20,4 +20,4 @@ export function Footer() {
       <p className="mt-2 text-[0.75rem]">No login. No download. Libre. 🇵🇭</p>
     </footer>
   );
-}
+};

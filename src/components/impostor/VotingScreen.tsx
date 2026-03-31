@@ -11,7 +11,11 @@ interface Props {
 
 type VotingPhase = "queue" | "vote";
 
-export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
+export const VotingScreen = ({
+  players,
+  currentPlayerIndex,
+  onVote,
+}: Props) => {
   const [phase, setPhase] = useState<VotingPhase>("queue");
   const [selectedSuspectId, setSelectedSuspectId] = useState<string | null>(
     null,
@@ -19,12 +23,12 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
 
   const currentVoter = players[currentPlayerIndex];
 
-  function handleReady() {
+  const handleReady = () => {
     setPhase("vote");
     setSelectedSuspectId(null);
-  }
+  };
 
-  function handleSubmitVote() {
+  const handleSubmitVote = () => {
     if (!selectedSuspectId || !currentVoter) return;
     const vote: Vote = {
       voterId: currentVoter.id,
@@ -33,7 +37,7 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
     setPhase("queue");
     setSelectedSuspectId(null);
     onVote(vote);
-  }
+  };
 
   const otherPlayers = players.filter((p) => p.id !== currentVoter?.id);
 
@@ -129,4 +133,4 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
       </div>
     </div>
   );
-}
+};

@@ -1,10 +1,12 @@
 import { shuffle } from "@/lib/shuffle";
 import type { Player } from "@/types/impostor";
 
-export function assignRoles(playerNames: string[]): {
+export const assignRoles = (
+  playerNames: string[],
+): {
   players: Player[];
   impostorId: string;
-} {
+} => {
   const players: Player[] = playerNames.map((name, i) => ({
     id: `player-${i}`,
     name,
@@ -22,4 +24,4 @@ export function assignRoles(playerNames: string[]): {
     ),
     impostorId: impostor.id,
   };
-}
+};

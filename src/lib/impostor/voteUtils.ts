@@ -1,15 +1,15 @@
 import type { Vote } from "@/types/impostor";
 
-export function tallyVotes(votes: Vote[]): Record<string, number> {
+export const tallyVotes = (votes: Vote[]): Record<string, number> => {
   const tallies: Record<string, number> = {};
   for (const vote of votes) {
     tallies[vote.suspectId] = (tallies[vote.suspectId] ?? 0) + 1;
   }
   return tallies;
-}
+};
 
 /** Returns the player ID with the most votes, or '' if there is a tie. */
-export function getTopVoteId(tallies: Record<string, number>): string {
+export const getTopVoteId = (tallies: Record<string, number>): string => {
   let maxVotes = 0;
   let topId = "";
   let hasTie = false;
@@ -23,4 +23,4 @@ export function getTopVoteId(tallies: Record<string, number>): string {
     }
   }
   return hasTie ? "" : topId;
-}
+};

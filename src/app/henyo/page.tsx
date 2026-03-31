@@ -1,5 +1,7 @@
 import { HenyoGame } from "@/components/henyo/HenyoGame";
 
-export default function HenyoPage() {
+const HenyoPage = () => {
   return <HenyoGame />;
-}
+};
+
+export default HenyoPage;

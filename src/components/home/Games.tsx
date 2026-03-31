@@ -1,10 +1,10 @@
-import { GameSection } from "./GameSection";
 import {
-  SOLO_GAMES,
-  MULTI_GAMES,
   FILTER_OPTIONS,
   type Filter,
+  MULTI_GAMES,
+  SOLO_GAMES,
 } from "@/lib/home/games";
+import { GameSection } from "./GameSection";
 
 const SOLO_SECTION = {
   title: "Solo Device Games",
@@ -33,7 +33,7 @@ interface Props {
   onFilterChange: (filter: Filter) => void;
 }
 
-export function Games({ filter, onFilterChange }: Props) {
+export const Games = ({ filter, onFilterChange }: Props) => {
   const visibleSolo = SOLO_GAMES.filter(
     (g) =>
       filter !== "multi" &&
@@ -79,4 +79,4 @@ export function Games({ filter, onFilterChange }: Props) {
       )}
     </div>
   );
-}
+};

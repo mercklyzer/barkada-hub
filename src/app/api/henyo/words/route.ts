@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import fallbackWords from "@/lib/henyo/fallback-words.json";
 import type { HenyoWord } from "@/types/henyo";
 
-function getSupabase() {
+const getSupabase = () => {
   try {
     // Lazy import to avoid crashing at module evaluation when env vars are missing
     const { supabase } = require("@/lib/supabase") as {
@@ -12,9 +12,9 @@ function getSupabase() {
   } catch {
     return null;
   }
-}
+};
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl;
   const category = searchParams.get("category") ?? "random";
   const limitParam = Number(searchParams.get("limit") ?? "20");
@@ -88,4 +88,4 @@ export async function GET(request: NextRequest) {
       },
     },
   );
-}
+};

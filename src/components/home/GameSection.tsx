@@ -9,13 +9,13 @@ interface Props {
   games: Game[];
 }
 
-export function GameSection({
+export const GameSection = ({
   title,
   badge,
   badgeStyle,
   dotColor,
   games,
-}: Props) {
+}: Props) => {
   return (
     <div className="mb-12">
       <div className="flex items-center justify-between flex-wrap gap-3 mb-5">
@@ -46,4 +46,4 @@ export function GameSection({
       </div>
     </div>
   );
-}
+};

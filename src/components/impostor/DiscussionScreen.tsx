@@ -7,7 +7,7 @@ interface Props {
   onStartVoting: () => void;
 }
 
-export function DiscussionScreen({ players, onStartVoting }: Props) {
+export const DiscussionScreen = ({ players, onStartVoting }: Props) => {
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-4">
       <div className="max-w-md w-full space-y-8">
@@ -62,4 +62,4 @@ export function DiscussionScreen({ players, onStartVoting }: Props) {
       </div>
     </div>
   );
-}
+};

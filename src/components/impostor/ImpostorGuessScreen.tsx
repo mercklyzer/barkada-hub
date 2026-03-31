@@ -9,18 +9,18 @@ interface Props {
   onSubmitGuess: (guess: string) => void;
 }
 
-export function ImpostorGuessScreen({
+export const ImpostorGuessScreen = ({
   impostorName,
   secretWord,
   onSubmitGuess,
-}: Props) {
+}: Props) => {
   const [guess, setGuess] = useState("");
 
-  function handleSubmit() {
+  const handleSubmit = () => {
     const trimmed = guess.trim();
     if (!trimmed) return;
     onSubmitGuess(trimmed);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-6">
@@ -84,4 +84,4 @@ export function ImpostorGuessScreen({
       </div>
     </div>
   );
-}
+};

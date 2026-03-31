@@ -1,6 +1,6 @@
 "use client";
 
-import type { Player, ImpostorWord } from "@/types/impostor";
+import type { ImpostorWord, Player } from "@/types/impostor";
 
 interface Props {
   players: Player[];
@@ -11,14 +11,14 @@ interface Props {
   onNext: () => void;
 }
 
-export function ClueRoundScreen({
+export const ClueRoundScreen = ({
   players,
   currentRound,
   totalRounds,
   currentPlayerIndex,
   secretWord,
   onNext,
-}: Props) {
+}: Props) => {
   const currentPlayer = players[currentPlayerIndex];
 
   return (
@@ -111,4 +111,4 @@ export function ClueRoundScreen({
       </div>
     </div>
   );
-}
+};

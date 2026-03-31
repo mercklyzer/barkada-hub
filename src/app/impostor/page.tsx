@@ -1,5 +1,7 @@
 import { ImpostorGame } from "@/components/impostor/ImpostorGame";
 
-export default function ImpostorPage() {
+const ImpostorPage = () => {
   return <ImpostorGame />;
-}
+};
+
+export default ImpostorPage;

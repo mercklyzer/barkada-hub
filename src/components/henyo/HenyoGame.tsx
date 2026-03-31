@@ -1,12 +1,12 @@
 "use client";
 
 import { useHenyoGame } from "@/hooks/useHenyoGame";
-import { SetupScreen } from "./SetupScreen";
 import { CountdownScreen } from "./CountdownScreen";
-import { PlayingScreen } from "./PlayingScreen";
 import { GameOverScreen } from "./GameOverScreen";
+import { PlayingScreen } from "./PlayingScreen";
+import { SetupScreen } from "./SetupScreen";
 
-export function HenyoGame() {
+export const HenyoGame = () => {
   const game = useHenyoGame();
 
   const {
@@ -72,4 +72,4 @@ export function HenyoGame() {
       </div>
     </div>
   );
-}
+};

@@ -12,11 +12,11 @@ interface WordCache {
   language: string;
 }
 
-export async function fetchImpostorWords(
+export const fetchImpostorWords = async (
   category: string,
   language: Language,
   limit = 20,
-): Promise<ImpostorWord[]> {
+): Promise<ImpostorWord[]> => {
   const cached = getCache(category, language);
   if (cached) return cached;
 
@@ -57,9 +57,12 @@ export async function fetchImpostorWords(
       .sort(() => Math.random() - 0.5)
       .slice(0, Math.max(10, limit));
   }
-}
+};
 
-function getCache(category: string, language: string): ImpostorWord[] | null {
+const getCache = (
+  category: string,
+  language: string,
+): ImpostorWord[] | null => {
   try {
     const raw = sessionStorage.getItem(CACHE_KEY);
     if (!raw) return null;
@@ -75,13 +78,13 @@ function getCache(category: string, language: string): ImpostorWord[] | null {
     // ignore
   }
   return null;
-}
+};
 
-function setCache(
+const setCache = (
   category: string,
   language: string,
   words: ImpostorWord[],
-): void {
+): void => {
   try {
     const cache: WordCache = {
       words,
@@ -93,4 +96,4 @@ function setCache(
   } catch {
     // ignore storage errors
   }
-}
+};

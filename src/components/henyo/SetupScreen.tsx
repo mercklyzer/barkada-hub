@@ -26,14 +26,14 @@ const CATEGORIES: {
 const TIMER_OPTIONS = [30, 60, 90, 120];
 const WORD_COUNT_OPTIONS = [3, 5, 10];
 
-export function SetupScreen({ onStart, isLoading, error }: Props) {
+export const SetupScreen = ({ onStart, isLoading, error }: Props) => {
   const [category, setCategory] = useState<HenyoCategory>("random");
   const [timerSeconds, setTimerSeconds] = useState(60);
   const [wordCount, setWordCount] = useState(5);
 
-  function handleStart() {
+  const handleStart = () => {
     onStart({ category, timerSeconds, wordCount });
-  }
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white px-4 py-6 overflow-y-auto">
@@ -138,4 +138,4 @@ export function SetupScreen({ onStart, isLoading, error }: Props) {
       </div>
     </div>
   );
-}
+};

@@ -1,4 +1,4 @@
-import type { Language, Difficulty } from "@/types/shared";
+import type { Difficulty, Language } from "@/types/shared";
 
 export type { Language, Difficulty };
 

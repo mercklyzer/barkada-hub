@@ -1,6 +1,6 @@
 "use client";
 
-import type { WordAttempt, GameSession } from "@/types/henyo";
+import type { GameSession, WordAttempt } from "@/types/henyo";
 
 interface Props {
   attempt: WordAttempt;
@@ -8,13 +8,13 @@ interface Props {
   onNext: () => void;
 }
 
-function formatTime(secs: number): string {
+const formatTime = (secs: number): string => {
   const m = Math.floor(secs / 60);
   const s = secs % 60;
   return `${m}:${String(s).padStart(2, "0")}`;
-}
+};
 
-export function ResultScreen({ attempt, session, onNext }: Props) {
+export const ResultScreen = ({ attempt, session, onNext }: Props) => {
   const isWin = attempt.result === "correct";
   const isTimeout = attempt.result === "timeout";
   const wordCount = session.settings.wordCount;
@@ -104,4 +104,4 @@ export function ResultScreen({ attempt, session, onNext }: Props) {
       </button>
     </div>
   );
-}
+};

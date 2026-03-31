@@ -66,3 +66,11 @@ Game logic lives in custom hooks:
 | `DATABASE_URL` | Direct DB URL (seed scripts only, never client-side) |
 
 Staging config in `.env.local`, production in `.env.production`.
+
+## Coding Style
+
+Applies to all `.ts`, `.tsx`, `.js`, `.jsx` files.
+
+- **Arrow functions** — use arrow functions for all functions, including React components declared inside a file
+- **No `var`** — use `const` by default; use `let` only when reassignment is needed
+- **`async/await` over `.then()`** — always use `async/await` for asynchronous code

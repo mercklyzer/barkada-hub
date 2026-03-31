@@ -8,7 +8,11 @@ interface Props {
   onNewGame: () => void;
 }
 
-export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
+export const ScoreboardScreen = ({
+  session,
+  onPlayAgain,
+  onNewGame,
+}: Props) => {
   const { players, sessionScores } = session;
 
   const sorted = [...players].sort(
@@ -98,4 +102,4 @@ export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
       </div>
     </div>
   );
-}
+};

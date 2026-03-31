@@ -8,11 +8,11 @@ interface Props {
   onChangeCategory: () => void;
 }
 
-export function GameOverScreen({
+export const GameOverScreen = ({
   session,
   onPlayAgain,
   onChangeCategory,
-}: Props) {
+}: Props) => {
   const { score, settings, attempts } = session;
   const total = settings.wordCount;
 
@@ -31,9 +31,9 @@ export function GameOverScreen({
         )
       : null;
 
-  function formatSecs(s: number) {
+  const formatSecs = (s: number) => {
     return `${Math.round(s)}s`;
-  }
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-6 py-8">
@@ -121,4 +121,4 @@ export function GameOverScreen({
       </div>
     </div>
   );
-}
+};

@@ -39,7 +39,7 @@ const TYPE_BADGE = {
   },
 };
 
-function GameCardContent({ game }: { game: Game }) {
+const GameCardContent = ({ game }: { game: Game }) => {
   const isSoon = game.status === "soon";
   const statusBadge = STATUS_BADGE[game.status];
   const typeBadge = TYPE_BADGE[game.type];
@@ -116,14 +116,14 @@ function GameCardContent({ game }: { game: Game }) {
       </div>
     </>
   );
-}
+};
 
 const cardBase = {
   background: "var(--card)",
   border: "1px solid var(--border)",
 };
 
-export function GameCard({ game }: { game: Game }) {
+export const GameCard = ({ game }: { game: Game }) => {
   if (game.status === "soon") {
     return (
       <div
@@ -144,4 +144,4 @@ export function GameCard({ game }: { game: Game }) {
       <GameCardContent game={game} />
     </Link>
   );
-}
+};

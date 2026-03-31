@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import type { Player, ImpostorWord } from "@/types/impostor";
+import { useEffect, useState } from "react";
+import type { ImpostorWord, Player } from "@/types/impostor";
 
 interface Props {
   player: Player;
@@ -9,11 +9,11 @@ interface Props {
   onRevealDone: () => void;
 }
 
-export function RoleRevealShowScreen({
+export const RoleRevealShowScreen = ({
   player,
   secretWord,
   onRevealDone,
-}: Props) {
+}: Props) => {
   const [buttonUnlocked, setButtonUnlocked] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
 
@@ -25,14 +25,14 @@ export function RoleRevealShowScreen({
     return () => clearTimeout(timer);
   }, [player.id]);
 
-  function handleDone() {
+  const handleDone = () => {
     if (!buttonUnlocked) return;
     setIsFlashing(true);
     setTimeout(() => {
       setIsFlashing(false);
       onRevealDone();
     }, 500);
-  }
+  };
 
   if (isFlashing) {
     return <div className="min-h-screen bg-black" />;
@@ -126,4 +126,4 @@ export function RoleRevealShowScreen({
       </div>
     </div>
   );
-}
+};

@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import fallbackWords from "@/lib/impostor/fallback-words.json";
 import type { ImpostorWord } from "@/types/impostor";
 
-function getSupabase() {
+const getSupabase = () => {
   try {
     const { supabase } = require("@/lib/supabase") as {
       supabase: import("@supabase/supabase-js").SupabaseClient;
@@ -11,9 +11,9 @@ function getSupabase() {
   } catch {
     return null;
   }
-}
+};
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl;
   const category = searchParams.get("category") ?? "random";
   const language = searchParams.get("language") ?? "filipino";
@@ -93,4 +93,4 @@ export async function GET(request: NextRequest) {
       },
     },
   );
-}
+};

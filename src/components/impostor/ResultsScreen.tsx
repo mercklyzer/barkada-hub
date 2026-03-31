@@ -1,7 +1,7 @@
 "use client";
 
+import { getTopVoteId, tallyVotes } from "@/lib/impostor/voteUtils";
 import type { ImpostorSession, Player } from "@/types/impostor";
-import { tallyVotes, getTopVoteId } from "@/lib/impostor/voteUtils";
 
 interface Props {
   session: ImpostorSession;
@@ -9,7 +9,7 @@ interface Props {
   onViewScoreboard: () => void;
 }
 
-function VoteTallyList({
+const VoteTallyList = ({
   players,
   tallies,
   impostorId,
@@ -17,7 +17,7 @@ function VoteTallyList({
   players: Player[];
   tallies: Record<string, number>;
   impostorId: string;
-}) {
+}) => {
   const sorted = players
     .slice()
     .sort((a, b) => (tallies[b.id] ?? 0) - (tallies[a.id] ?? 0));
@@ -60,15 +60,15 @@ function VoteTallyList({
       </ul>
     </div>
   );
-}
+};
 
-function SessionScoreList({
+const SessionScoreList = ({
   players,
   sessionScores,
 }: {
   players: Player[];
   sessionScores: Record<string, number>;
-}) {
+}) => {
   const sorted = players
     .slice()
     .sort((a, b) => (sessionScores[b.id] ?? 0) - (sessionScores[a.id] ?? 0));
@@ -98,13 +98,13 @@ function SessionScoreList({
       </ul>
     </div>
   );
-}
+};
 
-export function ResultsScreen({
+export const ResultsScreen = ({
   session,
   onNextRound,
   onViewScoreboard,
-}: Props) {
+}: Props) => {
   const { players, impostorId, secretWord, outcome, votes, impostorGuess } =
     session;
   const impostor = players.find((p) => p.id === impostorId);
@@ -208,4 +208,4 @@ export function ResultsScreen({
       </div>
     </div>
   );
-}
+};

@@ -1,4 +1,4 @@
-import type { HenyoWord, HenyoCategory } from "@/types/henyo";
+import type { HenyoCategory, HenyoWord } from "@/types/henyo";
 import fallbackWords from "./fallback-words.json";
 
 const CACHE_KEY = "henyo_words_cache";
@@ -10,10 +10,10 @@ interface WordCache {
   category: string;
 }
 
-export async function fetchWords(
+export const fetchWords = async (
   category: HenyoCategory,
   limit = 20,
-): Promise<HenyoWord[]> {
+): Promise<HenyoWord[]> => {
   // Check session cache first
   const cached = getCache(category);
   if (cached) return cached;
@@ -50,9 +50,9 @@ export async function fetchWords(
       .sort(() => Math.random() - 0.5)
       .slice(0, Math.max(10, limit));
   }
-}
+};
 
-function getCache(category: string): HenyoWord[] | null {
+const getCache = (category: string): HenyoWord[] | null => {
   try {
     const raw = sessionStorage.getItem(CACHE_KEY);
     if (!raw) return null;
@@ -67,13 +67,13 @@ function getCache(category: string): HenyoWord[] | null {
     // ignore
   }
   return null;
-}
+};
 
-function setCache(category: string, words: HenyoWord[]): void {
+const setCache = (category: string, words: HenyoWord[]): void => {
   try {
     const cache: WordCache = { words, fetchedAt: Date.now(), category };
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
   } catch {
     // ignore storage errors
   }
-}
+};

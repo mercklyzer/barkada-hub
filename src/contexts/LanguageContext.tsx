@@ -2,10 +2,10 @@
 
 import {
   createContext,
+  type ReactNode,
   useContext,
-  useState,
   useEffect,
-  ReactNode,
+  useState,
 } from "react";
 
 type UILanguage = "filipino" | "english";
@@ -25,7 +25,7 @@ const translations: Record<string, Record<UILanguage, string>> = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<UILanguage>("filipino");
 
   useEffect(() => {
@@ -35,24 +35,24 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  function setLanguage(lang: UILanguage) {
+  const setLanguage = (lang: UILanguage) => {
     setLanguageState(lang);
     localStorage.setItem("ui_language", lang);
-  }
+  };
 
-  function t(key: string): string {
+  const t = (key: string): string => {
     return translations[key]?.[language] ?? key;
-  }
+  };
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
-}
+};
 
-export function useLanguage() {
+export const useLanguage = () => {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
   return ctx;
-}
+};

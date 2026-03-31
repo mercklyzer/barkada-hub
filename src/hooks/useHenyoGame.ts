@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { fetchWords } from "@/lib/henyo/wordService";
+import { shuffle } from "@/lib/shuffle";
 import type {
-  GameState,
-  GameSettings,
   GameSession,
+  GameSettings,
+  GameState,
   HenyoWord,
   WordAttempt,
 } from "@/types/henyo";
-import { fetchWords } from "@/lib/henyo/wordService";
-import { shuffle } from "@/lib/shuffle";
 
 const MAX_PASSES = 3;
 
@@ -34,7 +34,7 @@ export interface UseHenyoGame {
   resetToSetup: () => void;
 }
 
-function captureEvent(name: string, props: Record<string, unknown>) {
+const captureEvent = (name: string, props: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
   import("posthog-js")
     .then(({ default: posthog }) => {
@@ -43,9 +43,9 @@ function captureEvent(name: string, props: Record<string, unknown>) {
     .catch(() => {
       /* ignore */
     });
-}
+};
 
-export function useHenyoGame(): UseHenyoGame {
+export const useHenyoGame = (): UseHenyoGame => {
   const [gameState, setGameState] = useState<GameState>("setup");
   const [session, setSession] = useState<GameSession | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
@@ -297,4 +297,4 @@ export function useHenyoGame(): UseHenyoGame {
     restartGame,
     resetToSetup,
   };
-}
+};

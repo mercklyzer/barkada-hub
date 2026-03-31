@@ -6,7 +6,7 @@ interface Props {
   onLangChange: (lang: Lang) => void;
 }
 
-export function Nav({ lang, onLangChange }: Props) {
+export const Nav = ({ lang, onLangChange }: Props) => {
   return (
     <nav
       className="sticky top-0 z-[100] flex items-center justify-between px-6 h-14"
@@ -58,4 +58,4 @@ export function Nav({ lang, onLangChange }: Props) {
       </div>
     </nav>
   );
-}
+};

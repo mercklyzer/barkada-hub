@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   onCountdownEnd: () => void;
@@ -8,7 +8,7 @@ interface Props {
 
 const STEPS = ["3", "2", "1", "LARO!"];
 
-export function CountdownScreen({ onCountdownEnd }: Props) {
+export const CountdownScreen = ({ onCountdownEnd }: Props) => {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -44,4 +44,4 @@ export function CountdownScreen({ onCountdownEnd }: Props) {
       </div>
     </div>
   );
-}
+};

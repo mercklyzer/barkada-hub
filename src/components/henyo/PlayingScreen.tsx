@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import type { HenyoWord } from "@/types/henyo";
 
 interface Props {
@@ -12,11 +12,11 @@ interface Props {
   onPass: () => void;
 }
 
-function formatTime(secs: number): string {
+const formatTime = (secs: number): string => {
   const m = Math.floor(secs / 60);
   const s = secs % 60;
   return `${m}:${String(s).padStart(2, "0")}`;
-}
+};
 
 const CATEGORY_LABELS: Record<string, string> = {
   tao: "TAO",
@@ -30,14 +30,14 @@ const CATEGORY_LABELS: Record<string, string> = {
   random: "RANDOM",
 };
 
-export function PlayingScreen({
+export const PlayingScreen = ({
   word,
   timeLeft,
   timerSeconds,
   passesLeft,
   onCorrect,
   onPass,
-}: Props) {
+}: Props) => {
   const [feedback, setFeedback] = useState<{
     type: "correct" | "pass";
     fading: boolean;
@@ -126,4 +126,4 @@ export function PlayingScreen({
       </div>
     </div>
   );
-}
+};

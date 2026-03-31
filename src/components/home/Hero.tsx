@@ -4,7 +4,7 @@ interface Props {
   lang: Lang;
 }
 
-export function Hero({ lang }: Props) {
+export const Hero = ({ lang }: Props) => {
   return (
     <section className="text-center px-6 pt-[72px] pb-12 max-w-[720px] mx-auto">
       <div
@@ -39,4 +39,4 @@ export function Hero({ lang }: Props) {
       </a>
     </section>
   );
-}
+};

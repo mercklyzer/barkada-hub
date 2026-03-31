@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
+import { assignRoles } from "@/lib/impostor/roleAssigner";
+import { getTopVoteId, tallyVotes } from "@/lib/impostor/voteUtils";
+import { fetchImpostorWords } from "@/lib/impostor/wordService";
+import { shuffle } from "@/lib/shuffle";
 import type {
+  GameSettings,
   ImpostorGameState,
   ImpostorSession,
-  GameSettings,
   Vote,
 } from "@/types/impostor";
-import { fetchImpostorWords } from "@/lib/impostor/wordService";
-import { assignRoles } from "@/lib/impostor/roleAssigner";
-import { shuffle } from "@/lib/shuffle";
-import { tallyVotes, getTopVoteId } from "@/lib/impostor/voteUtils";
 
-function captureEvent(name: string, props: Record<string, unknown>) {
+const captureEvent = (name: string, props: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
   import("posthog-js")
     .then(({ default: posthog }) => {
@@ -21,7 +21,7 @@ function captureEvent(name: string, props: Record<string, unknown>) {
     .catch(() => {
       /* ignore */
     });
-}
+};
 
 export interface UseImpostorGame {
   gameState: ImpostorGameState;
@@ -42,7 +42,7 @@ export interface UseImpostorGame {
   newGame: () => void;
 }
 
-export function useImpostorGame(): UseImpostorGame {
+export const useImpostorGame = (): UseImpostorGame => {
   const [gameState, setGameState] = useState<ImpostorGameState>("setup");
   const [session, setSession] = useState<ImpostorSession | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -292,4 +292,4 @@ export function useImpostorGame(): UseImpostorGame {
     playAgain,
     newGame,
   };
-}
+};

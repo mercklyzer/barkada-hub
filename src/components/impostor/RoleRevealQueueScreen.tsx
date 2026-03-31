@@ -7,7 +7,7 @@ interface Props {
   onReady: () => void;
 }
 
-export function RoleRevealQueueScreen({ player, onReady }: Props) {
+export const RoleRevealQueueScreen = ({ player, onReady }: Props) => {
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-6">
       <div className="max-w-md w-full text-center space-y-8">
@@ -37,4 +37,4 @@ export function RoleRevealQueueScreen({ player, onReady }: Props) {
       </div>
     </div>
   );
-}
+};
