@@ -1,5 +1,5 @@
-import { ImpostorGame } from '@/components/impostor/ImpostorGame'
+import { ImpostorGame } from "@/components/impostor/ImpostorGame";
 
 export default function ImpostorPage() {
-  return <ImpostorGame />
+  return <ImpostorGame />;
 }

@@ -1,5 +1,5 @@
-import { HenyoGame } from '@/components/henyo/HenyoGame'
+import { HenyoGame } from "@/components/henyo/HenyoGame";
 
 export default function HenyoPage() {
-  return <HenyoGame />
+  return <HenyoGame />;
 }

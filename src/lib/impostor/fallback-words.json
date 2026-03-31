@@ -1,79 +1,511 @@
 [
-  { "id": "imp-fallback-p1",  "word": "Adobo",         "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p2",  "word": "Sinigang",      "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p3",  "word": "Lechon",        "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p4",  "word": "Pancit",        "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p5",  "word": "Halo-halo",     "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p6",  "word": "Kare-kare",     "category": "pagkain", "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-p7",  "word": "Dinuguan",      "category": "pagkain", "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-p8",  "word": "Bulalo",        "category": "pagkain", "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-p9",  "word": "Tinola",        "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p10", "word": "Lugaw",         "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p11", "word": "Sisig",         "category": "pagkain", "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-p12", "word": "Arroz Caldo",   "category": "pagkain", "difficulty": "medium", "language": "filipino" },
+  {
+    "id": "imp-fallback-p1",
+    "word": "Adobo",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p2",
+    "word": "Sinigang",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p3",
+    "word": "Lechon",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p4",
+    "word": "Pancit",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p5",
+    "word": "Halo-halo",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p6",
+    "word": "Kare-kare",
+    "category": "pagkain",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p7",
+    "word": "Dinuguan",
+    "category": "pagkain",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p8",
+    "word": "Bulalo",
+    "category": "pagkain",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p9",
+    "word": "Tinola",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p10",
+    "word": "Lugaw",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p11",
+    "word": "Sisig",
+    "category": "pagkain",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-p12",
+    "word": "Arroz Caldo",
+    "category": "pagkain",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
 
-  { "id": "imp-fallback-h1",  "word": "Kalabaw",       "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h2",  "word": "Baboy",         "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h3",  "word": "Manok",         "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h4",  "word": "Kambing",       "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h5",  "word": "Pusa",          "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h6",  "word": "Aso",           "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h7",  "word": "Daga",          "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h8",  "word": "Palaka",        "category": "hayop",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-h9",  "word": "Ahas",          "category": "hayop",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-h10", "word": "Agila",         "category": "hayop",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-h11", "word": "Pawikan",       "category": "hayop",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-h12", "word": "Tamaraw",       "category": "hayop",   "difficulty": "hard",   "language": "filipino" },
+  {
+    "id": "imp-fallback-h1",
+    "word": "Kalabaw",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h2",
+    "word": "Baboy",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h3",
+    "word": "Manok",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h4",
+    "word": "Kambing",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h5",
+    "word": "Pusa",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h6",
+    "word": "Aso",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h7",
+    "word": "Daga",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h8",
+    "word": "Palaka",
+    "category": "hayop",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h9",
+    "word": "Ahas",
+    "category": "hayop",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h10",
+    "word": "Agila",
+    "category": "hayop",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h11",
+    "word": "Pawikan",
+    "category": "hayop",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-h12",
+    "word": "Tamaraw",
+    "category": "hayop",
+    "difficulty": "hard",
+    "language": "filipino"
+  },
 
-  { "id": "imp-fallback-l1",  "word": "Maynila",       "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l2",  "word": "Cebu",          "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l3",  "word": "Davao",         "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l4",  "word": "Boracay",       "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l5",  "word": "Palawan",       "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l6",  "word": "Batangas",      "category": "lugar",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-l7",  "word": "Baguio",        "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l8",  "word": "Iloilo",        "category": "lugar",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-l9",  "word": "Zamboanga",     "category": "lugar",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-l10", "word": "Vigan",         "category": "lugar",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-l11", "word": "Tagaytay",      "category": "lugar",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-l12", "word": "Naga",          "category": "lugar",   "difficulty": "medium", "language": "filipino" },
+  {
+    "id": "imp-fallback-l1",
+    "word": "Maynila",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l2",
+    "word": "Cebu",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l3",
+    "word": "Davao",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l4",
+    "word": "Boracay",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l5",
+    "word": "Palawan",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l6",
+    "word": "Batangas",
+    "category": "lugar",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l7",
+    "word": "Baguio",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l8",
+    "word": "Iloilo",
+    "category": "lugar",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l9",
+    "word": "Zamboanga",
+    "category": "lugar",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l10",
+    "word": "Vigan",
+    "category": "lugar",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l11",
+    "word": "Tagaytay",
+    "category": "lugar",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-l12",
+    "word": "Naga",
+    "category": "lugar",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
 
-  { "id": "imp-fallback-t1",  "word": "Guro",          "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t2",  "word": "Doktor",        "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t3",  "word": "Sundalo",       "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t4",  "word": "Manlalaro",     "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t5",  "word": "Magsasaka",     "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t6",  "word": "Mangingisda",   "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t7",  "word": "Abogado",       "category": "tao",     "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-t8",  "word": "Astronaut",     "category": "tao",     "difficulty": "medium", "language": "english"  },
-  { "id": "imp-fallback-t9",  "word": "Pangulo",       "category": "tao",     "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-t10", "word": "Piloto",        "category": "tao",     "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-t11", "word": "Kusinero",      "category": "tao",     "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-t12", "word": "Artista",       "category": "tao",     "difficulty": "easy",   "language": "filipino" },
+  {
+    "id": "imp-fallback-t1",
+    "word": "Guro",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t2",
+    "word": "Doktor",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t3",
+    "word": "Sundalo",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t4",
+    "word": "Manlalaro",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t5",
+    "word": "Magsasaka",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t6",
+    "word": "Mangingisda",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t7",
+    "word": "Abogado",
+    "category": "tao",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t8",
+    "word": "Astronaut",
+    "category": "tao",
+    "difficulty": "medium",
+    "language": "english"
+  },
+  {
+    "id": "imp-fallback-t9",
+    "word": "Pangulo",
+    "category": "tao",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t10",
+    "word": "Piloto",
+    "category": "tao",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t11",
+    "word": "Kusinero",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-t12",
+    "word": "Artista",
+    "category": "tao",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
 
-  { "id": "imp-fallback-b1",  "word": "Telepono",      "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b2",  "word": "Relo",          "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b3",  "word": "Sapatos",       "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b4",  "word": "Salamin",       "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b5",  "word": "Libro",         "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b6",  "word": "Payong",        "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b7",  "word": "Gitara",        "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b8",  "word": "Kandila",       "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b9",  "word": "Palayok",       "category": "bagay",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-b10", "word": "Kutsilyo",      "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-b11", "word": "Poso",          "category": "bagay",   "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-b12", "word": "Bangka",        "category": "bagay",   "difficulty": "easy",   "language": "filipino" },
+  {
+    "id": "imp-fallback-b1",
+    "word": "Telepono",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b2",
+    "word": "Relo",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b3",
+    "word": "Sapatos",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b4",
+    "word": "Salamin",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b5",
+    "word": "Libro",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b6",
+    "word": "Payong",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b7",
+    "word": "Gitara",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b8",
+    "word": "Kandila",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b9",
+    "word": "Palayok",
+    "category": "bagay",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b10",
+    "word": "Kutsilyo",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b11",
+    "word": "Poso",
+    "category": "bagay",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-b12",
+    "word": "Bangka",
+    "category": "bagay",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
 
-  { "id": "imp-fallback-pl1", "word": "Basketball",    "category": "palaro",  "difficulty": "easy",   "language": "english"  },
-  { "id": "imp-fallback-pl2", "word": "Volleyball",    "category": "palaro",  "difficulty": "easy",   "language": "english"  },
-  { "id": "imp-fallback-pl3", "word": "Sipa",          "category": "palaro",  "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-pl4", "word": "Patintero",     "category": "palaro",  "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-pl5", "word": "Tumbang Preso", "category": "palaro",  "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-pl6", "word": "Sungka",        "category": "palaro",  "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-pl7", "word": "Agawan Base",   "category": "palaro",  "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-pl8", "word": "Luksong Tinik", "category": "palaro",  "difficulty": "easy",   "language": "filipino" },
-  { "id": "imp-fallback-pl9", "word": "Boxing",        "category": "palaro",  "difficulty": "easy",   "language": "english"  },
-  { "id": "imp-fallback-pl10","word": "Ajedrez",       "category": "palaro",  "difficulty": "medium", "language": "filipino" },
-  { "id": "imp-fallback-pl11","word": "Swimming",      "category": "palaro",  "difficulty": "easy",   "language": "english"  },
-  { "id": "imp-fallback-pl12","word": "Badminton",     "category": "palaro",  "difficulty": "easy",   "language": "english"  }
+  {
+    "id": "imp-fallback-pl1",
+    "word": "Basketball",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "english"
+  },
+  {
+    "id": "imp-fallback-pl2",
+    "word": "Volleyball",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "english"
+  },
+  {
+    "id": "imp-fallback-pl3",
+    "word": "Sipa",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl4",
+    "word": "Patintero",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl5",
+    "word": "Tumbang Preso",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl6",
+    "word": "Sungka",
+    "category": "palaro",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl7",
+    "word": "Agawan Base",
+    "category": "palaro",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl8",
+    "word": "Luksong Tinik",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl9",
+    "word": "Boxing",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "english"
+  },
+  {
+    "id": "imp-fallback-pl10",
+    "word": "Ajedrez",
+    "category": "palaro",
+    "difficulty": "medium",
+    "language": "filipino"
+  },
+  {
+    "id": "imp-fallback-pl11",
+    "word": "Swimming",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "english"
+  },
+  {
+    "id": "imp-fallback-pl12",
+    "word": "Badminton",
+    "category": "palaro",
+    "difficulty": "easy",
+    "language": "english"
+  }
 ]

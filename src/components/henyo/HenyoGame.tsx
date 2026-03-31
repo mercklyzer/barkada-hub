@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import { useHenyoGame } from '@/hooks/useHenyoGame'
-import { SetupScreen } from './SetupScreen'
-import { CountdownScreen } from './CountdownScreen'
-import { PlayingScreen } from './PlayingScreen'
-import { GameOverScreen } from './GameOverScreen'
+import { useHenyoGame } from "@/hooks/useHenyoGame";
+import { SetupScreen } from "./SetupScreen";
+import { CountdownScreen } from "./CountdownScreen";
+import { PlayingScreen } from "./PlayingScreen";
+import { GameOverScreen } from "./GameOverScreen";
 
 export function HenyoGame() {
-  const game = useHenyoGame()
+  const game = useHenyoGame();
 
   const {
     gameState,
@@ -23,23 +23,19 @@ export function HenyoGame() {
     passWord,
     restartGame,
     resetToSetup,
-  } = game
+  } = game;
 
-  if (gameState === 'setup') {
+  if (gameState === "setup") {
     return (
-      <SetupScreen
-        onStart={startGame}
-        isLoading={isLoading}
-        error={error}
-      />
-    )
+      <SetupScreen onStart={startGame} isLoading={isLoading} error={error} />
+    );
   }
 
-  if (gameState === 'countdown') {
-    return <CountdownScreen onCountdownEnd={beginPlaying} />
+  if (gameState === "countdown") {
+    return <CountdownScreen onCountdownEnd={beginPlaying} />;
   }
 
-  if (gameState === 'playing' && currentWord) {
+  if (gameState === "playing" && currentWord) {
     return (
       <PlayingScreen
         word={currentWord}
@@ -49,17 +45,17 @@ export function HenyoGame() {
         onCorrect={markCorrect}
         onPass={passWord}
       />
-    )
+    );
   }
 
-  if (gameState === 'game_over' && session) {
+  if (gameState === "game_over" && session) {
     return (
       <GameOverScreen
         session={session}
         onPlayAgain={restartGame}
         onChangeCategory={resetToSetup}
       />
-    )
+    );
   }
 
   // Fallback: reset to setup if somehow in bad state
@@ -75,5 +71,5 @@ export function HenyoGame() {
         </button>
       </div>
     </div>
-  )
+  );
 }

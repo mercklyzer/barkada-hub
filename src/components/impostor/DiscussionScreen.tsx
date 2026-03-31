@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import type { Player } from '@/types/impostor'
+import type { Player } from "@/types/impostor";
 
 interface Props {
-  players: Player[]
-  onStartVoting: () => void
+  players: Player[];
+  onStartVoting: () => void;
 }
 
 export function DiscussionScreen({ players, onStartVoting }: Props) {
@@ -28,13 +28,15 @@ export function DiscussionScreen({ players, onStartVoting }: Props) {
                 key={player.id}
                 className={`
                   flex items-center gap-3 px-4 py-4
-                  ${i < players.length - 1 ? 'border-b border-slate-700' : ''}
+                  ${i < players.length - 1 ? "border-b border-slate-700" : ""}
                 `}
               >
                 <span className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold text-slate-300">
                   {i + 1}
                 </span>
-                <span className="font-bold text-base text-white">{player.name}</span>
+                <span className="font-bold text-base text-white">
+                  {player.name}
+                </span>
               </li>
             ))}
           </ul>
@@ -42,7 +44,8 @@ export function DiscussionScreen({ players, onStartVoting }: Props) {
 
         <div className="bg-yellow-900/40 border border-yellow-700/50 rounded-2xl px-5 py-4">
           <p className="text-yellow-300 text-sm font-medium text-center">
-            Pag-usapan ang mga clue na ibinigay. Sino ang pinakamalabo? Sino ang hindi sigurado?
+            Pag-usapan ang mga clue na ibinigay. Sino ang pinakamalabo? Sino ang
+            hindi sigurado?
           </p>
         </div>
 
@@ -58,5 +61,5 @@ export function DiscussionScreen({ players, onStartVoting }: Props) {
         </button>
       </div>
     </div>
-  )
+  );
 }

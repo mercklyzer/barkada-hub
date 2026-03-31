@@ -1,21 +1,21 @@
 @import "tailwindcss/index.css";
 
 :root {
-  --blue:    #0038A8;
-  --red:     #CE1126;
-  --gold:    #FCD116;
-  --bg:      #0d1117;
+  --blue: #0038a8;
+  --red: #ce1126;
+  --gold: #fcd116;
+  --bg: #0d1117;
   --surface: #161b22;
-  --card:    #1c2230;
-  --border:  #2d3748;
-  --text:    #e2e8f0;
-  --muted:   #718096;
+  --card: #1c2230;
+  --border: #2d3748;
+  --text: #e2e8f0;
+  --muted: #718096;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 .game-card-link:hover {

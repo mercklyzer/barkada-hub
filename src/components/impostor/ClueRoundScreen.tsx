@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
-import type { Player, ImpostorWord } from '@/types/impostor'
+import type { Player, ImpostorWord } from "@/types/impostor";
 
 interface Props {
-  players: Player[]
-  currentRound: number
-  totalRounds: number
-  currentPlayerIndex: number
-  secretWord: ImpostorWord | null
-  onNext: () => void
+  players: Player[];
+  currentRound: number;
+  totalRounds: number;
+  currentPlayerIndex: number;
+  secretWord: ImpostorWord | null;
+  onNext: () => void;
 }
 
 export function ClueRoundScreen({
@@ -19,7 +19,7 @@ export function ClueRoundScreen({
   secretWord,
   onNext,
 }: Props) {
-  const currentPlayer = players[currentPlayerIndex]
+  const currentPlayer = players[currentPlayerIndex];
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-6">
@@ -31,7 +31,8 @@ export function ClueRoundScreen({
           </p>
           {secretWord && (
             <p className="text-slate-500 text-xs mt-1">
-              Kategorya: <span className="text-slate-400">{secretWord.category}</span>
+              Kategorya:{" "}
+              <span className="text-slate-400">{secretWord.category}</span>
             </p>
           )}
         </div>
@@ -41,7 +42,9 @@ export function ClueRoundScreen({
           <p className="text-blue-300 text-xs uppercase tracking-widest font-bold mb-1">
             Ikaw na
           </p>
-          <h2 className="text-3xl font-black text-white">{currentPlayer?.name ?? '...'}</h2>
+          <h2 className="text-3xl font-black text-white">
+            {currentPlayer?.name ?? "..."}
+          </h2>
           <p className="text-blue-300 text-sm mt-2 font-medium">
             Ibigay ang iyong clue nang malakas!
           </p>
@@ -60,31 +63,33 @@ export function ClueRoundScreen({
                 key={player.id}
                 className={`
                   flex items-center gap-3 px-4 py-3
-                  ${i < players.length - 1 ? 'border-b border-slate-700' : ''}
-                  ${i === currentPlayerIndex ? 'bg-blue-900/30' : ''}
+                  ${i < players.length - 1 ? "border-b border-slate-700" : ""}
+                  ${i === currentPlayerIndex ? "bg-blue-900/30" : ""}
                 `}
               >
                 <span
                   className={`
                     w-7 h-7 rounded-full flex items-center justify-center
                     text-xs font-bold flex-shrink-0
-                    ${i === currentPlayerIndex ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400'}
-                    ${i < currentPlayerIndex ? 'bg-green-800 text-green-300' : ''}
+                    ${i === currentPlayerIndex ? "bg-blue-600 text-white" : "bg-slate-700 text-slate-400"}
+                    ${i < currentPlayerIndex ? "bg-green-800 text-green-300" : ""}
                   `}
                 >
-                  {i < currentPlayerIndex ? '✓' : i + 1}
+                  {i < currentPlayerIndex ? "✓" : i + 1}
                 </span>
                 <span
                   className={`
                     font-bold text-base
-                    ${i === currentPlayerIndex ? 'text-white' : 'text-slate-400'}
-                    ${i < currentPlayerIndex ? 'text-slate-500 line-through' : ''}
+                    ${i === currentPlayerIndex ? "text-white" : "text-slate-400"}
+                    ${i < currentPlayerIndex ? "text-slate-500 line-through" : ""}
                   `}
                 >
                   {player.name}
                 </span>
                 {i === currentPlayerIndex && (
-                  <span className="ml-auto text-blue-400 text-xs font-bold">IKAW NA</span>
+                  <span className="ml-auto text-blue-400 text-xs font-bold">
+                    IKAW NA
+                  </span>
                 )}
               </li>
             ))}
@@ -105,5 +110,5 @@ export function ClueRoundScreen({
         </button>
       </div>
     </div>
-  )
+  );
 }

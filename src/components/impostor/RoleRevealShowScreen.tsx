@@ -1,37 +1,41 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import type { Player, ImpostorWord } from '@/types/impostor'
+import { useState, useEffect } from "react";
+import type { Player, ImpostorWord } from "@/types/impostor";
 
 interface Props {
-  player: Player
-  secretWord: ImpostorWord | null
-  onRevealDone: () => void
+  player: Player;
+  secretWord: ImpostorWord | null;
+  onRevealDone: () => void;
 }
 
-export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props) {
-  const [buttonUnlocked, setButtonUnlocked] = useState(false)
-  const [isFlashing, setIsFlashing] = useState(false)
+export function RoleRevealShowScreen({
+  player,
+  secretWord,
+  onRevealDone,
+}: Props) {
+  const [buttonUnlocked, setButtonUnlocked] = useState(false);
+  const [isFlashing, setIsFlashing] = useState(false);
 
-  const isImpostor = player.role === 'impostor'
+  const isImpostor = player.role === "impostor";
 
   useEffect(() => {
-    setButtonUnlocked(false)
-    const timer = setTimeout(() => setButtonUnlocked(true), 3000)
-    return () => clearTimeout(timer)
-  }, [player.id])
+    setButtonUnlocked(false);
+    const timer = setTimeout(() => setButtonUnlocked(true), 3000);
+    return () => clearTimeout(timer);
+  }, [player.id]);
 
   function handleDone() {
-    if (!buttonUnlocked) return
-    setIsFlashing(true)
+    if (!buttonUnlocked) return;
+    setIsFlashing(true);
     setTimeout(() => {
-      setIsFlashing(false)
-      onRevealDone()
-    }, 500)
+      setIsFlashing(false);
+      onRevealDone();
+    }, 500);
   }
 
   if (isFlashing) {
-    return <div className="min-h-screen bg-black" />
+    return <div className="min-h-screen bg-black" />;
   }
 
   if (isImpostor) {
@@ -41,7 +45,7 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
           <div className="space-y-4">
             <div className="inline-block bg-red-700 rounded-2xl px-4 py-2">
               <span className="text-sm font-bold uppercase tracking-widest text-red-200">
-                {secretWord?.category ?? 'Kategorya'}
+                {secretWord?.category ?? "Kategorya"}
               </span>
             </div>
             <h1 className="text-5xl font-black tracking-tight text-white">
@@ -52,7 +56,8 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
 
           <div className="bg-red-800 rounded-2xl px-6 py-4">
             <p className="text-red-200 text-sm">
-              Pakinggan ang mga clue ng ibang manlalaro. Ibigay ang isang clue na parang alam mo ang salita.
+              Pakinggan ang mga clue ng ibang manlalaro. Ibigay ang isang clue
+              na parang alam mo ang salita.
             </p>
           </div>
 
@@ -64,16 +69,16 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
               transition-all min-h-[72px]
               ${
                 buttonUnlocked
-                  ? 'bg-white text-red-900 hover:bg-red-100 active:bg-red-200'
-                  : 'bg-red-800 text-red-600 cursor-not-allowed opacity-50'
+                  ? "bg-white text-red-900 hover:bg-red-100 active:bg-red-200"
+                  : "bg-red-800 text-red-600 cursor-not-allowed opacity-50"
               }
             `}
           >
-            {buttonUnlocked ? 'NAKITA NA' : 'Hintayin...'}
+            {buttonUnlocked ? "NAKITA NA" : "Hintayin..."}
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -82,7 +87,7 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
         <div className="space-y-4">
           <div className="inline-block bg-green-700 rounded-2xl px-4 py-2">
             <span className="text-sm font-bold uppercase tracking-widest text-green-200">
-              {secretWord?.category ?? 'Kategorya'}
+              {secretWord?.category ?? "Kategorya"}
             </span>
           </div>
 
@@ -91,14 +96,15 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
               MIYEMBRO NG TEAM
             </p>
             <h1 className="text-6xl font-black tracking-tight text-white">
-              {secretWord?.word ?? '...'}
+              {secretWord?.word ?? "..."}
             </h1>
           </div>
         </div>
 
         <div className="bg-green-800 rounded-2xl px-6 py-4">
           <p className="text-green-200 text-sm">
-            Ibigay ang clue na nagpapakilala na alam mo ang salita, pero huwag masyadong halata!
+            Ibigay ang clue na nagpapakilala na alam mo ang salita, pero huwag
+            masyadong halata!
           </p>
         </div>
 
@@ -110,14 +116,14 @@ export function RoleRevealShowScreen({ player, secretWord, onRevealDone }: Props
             transition-all min-h-[72px]
             ${
               buttonUnlocked
-                ? 'bg-white text-green-900 hover:bg-green-100 active:bg-green-200'
-                : 'bg-green-800 text-green-600 cursor-not-allowed opacity-50'
+                ? "bg-white text-green-900 hover:bg-green-100 active:bg-green-200"
+                : "bg-green-800 text-green-600 cursor-not-allowed opacity-50"
             }
           `}
         >
-          {buttonUnlocked ? 'NAKITA NA' : 'Hintayin...'}
+          {buttonUnlocked ? "NAKITA NA" : "Hintayin..."}
         </button>
       </div>
     </div>
-  )
+  );
 }

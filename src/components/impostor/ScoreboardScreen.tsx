@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import type { ImpostorSession } from '@/types/impostor'
+import type { ImpostorSession } from "@/types/impostor";
 
 interface Props {
-  session: ImpostorSession
-  onPlayAgain: () => void
-  onNewGame: () => void
+  session: ImpostorSession;
+  onPlayAgain: () => void;
+  onNewGame: () => void;
 }
 
 export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
-  const { players, sessionScores } = session
+  const { players, sessionScores } = session;
 
   const sorted = [...players].sort(
-    (a, b) => (sessionScores[b.id] ?? 0) - (sessionScores[a.id] ?? 0)
-  )
+    (a, b) => (sessionScores[b.id] ?? 0) - (sessionScores[a.id] ?? 0),
+  );
 
-  const topScore = sessionScores[sorted[0]?.id] ?? 0
+  const topScore = sessionScores[sorted[0]?.id] ?? 0;
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-4">
@@ -23,41 +23,44 @@ export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
         <div className="text-center">
           <h1 className="text-4xl font-black tracking-tight">SCOREBOARD</h1>
           <p className="text-slate-400 text-sm mt-1">
-            {session.roundsPlayedInSession} round{session.roundsPlayedInSession !== 1 ? 's' : ''} na nalaro
+            {session.roundsPlayedInSession} round
+            {session.roundsPlayedInSession !== 1 ? "s" : ""} na nalaro
           </p>
         </div>
 
         <div className="bg-slate-800 rounded-2xl overflow-hidden">
           <ul>
             {sorted.map((player, i) => {
-              const score = sessionScores[player.id] ?? 0
-              const isTop = score === topScore && topScore > 0
+              const score = sessionScores[player.id] ?? 0;
+              const isTop = score === topScore && topScore > 0;
               return (
                 <li
                   key={player.id}
                   className={`
                     flex items-center gap-4 px-5 py-4
-                    ${i < sorted.length - 1 ? 'border-b border-slate-700' : ''}
-                    ${isTop && i === 0 ? 'bg-yellow-900/30' : ''}
+                    ${i < sorted.length - 1 ? "border-b border-slate-700" : ""}
+                    ${isTop && i === 0 ? "bg-yellow-900/30" : ""}
                   `}
                 >
                   <span
                     className={`
                       w-9 h-9 rounded-full flex items-center justify-center
                       font-black text-lg flex-shrink-0
-                      ${i === 0 && topScore > 0 ? 'bg-yellow-500 text-black' : 'bg-slate-700 text-slate-300'}
+                      ${i === 0 && topScore > 0 ? "bg-yellow-500 text-black" : "bg-slate-700 text-slate-300"}
                     `}
                   >
                     {i + 1}
                   </span>
                   <div className="flex-1">
-                    <p className="font-black text-white text-xl">{player.name}</p>
+                    <p className="font-black text-white text-xl">
+                      {player.name}
+                    </p>
                   </div>
                   <div className="text-right">
                     <span
                       className={`
                         font-black text-3xl
-                        ${i === 0 && topScore > 0 ? 'text-yellow-400' : 'text-slate-300'}
+                        ${i === 0 && topScore > 0 ? "text-yellow-400" : "text-slate-300"}
                       `}
                     >
                       {score}
@@ -65,7 +68,7 @@ export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
                     <span className="text-slate-500 text-xs ml-1">panalo</span>
                   </div>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
@@ -94,5 +97,5 @@ export function ScoreboardScreen({ session, onPlayAgain, onNewGame }: Props) {
         </div>
       </div>
     </div>
-  )
+  );
 }

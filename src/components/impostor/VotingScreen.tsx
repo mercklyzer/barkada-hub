@@ -1,45 +1,50 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import type { Player, Vote } from '@/types/impostor'
+import { useState } from "react";
+import type { Player, Vote } from "@/types/impostor";
 
 interface Props {
-  players: Player[]
-  currentPlayerIndex: number
-  onVote: (vote: Vote) => void
+  players: Player[];
+  currentPlayerIndex: number;
+  onVote: (vote: Vote) => void;
 }
 
-type VotingPhase = 'queue' | 'vote'
+type VotingPhase = "queue" | "vote";
 
 export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
-  const [phase, setPhase] = useState<VotingPhase>('queue')
-  const [selectedSuspectId, setSelectedSuspectId] = useState<string | null>(null)
+  const [phase, setPhase] = useState<VotingPhase>("queue");
+  const [selectedSuspectId, setSelectedSuspectId] = useState<string | null>(
+    null,
+  );
 
-  const currentVoter = players[currentPlayerIndex]
+  const currentVoter = players[currentPlayerIndex];
 
   function handleReady() {
-    setPhase('vote')
-    setSelectedSuspectId(null)
+    setPhase("vote");
+    setSelectedSuspectId(null);
   }
 
   function handleSubmitVote() {
-    if (!selectedSuspectId || !currentVoter) return
-    const vote: Vote = { voterId: currentVoter.id, suspectId: selectedSuspectId }
-    setPhase('queue')
-    setSelectedSuspectId(null)
-    onVote(vote)
+    if (!selectedSuspectId || !currentVoter) return;
+    const vote: Vote = {
+      voterId: currentVoter.id,
+      suspectId: selectedSuspectId,
+    };
+    setPhase("queue");
+    setSelectedSuspectId(null);
+    onVote(vote);
   }
 
-  const otherPlayers = players.filter((p) => p.id !== currentVoter?.id)
+  const otherPlayers = players.filter((p) => p.id !== currentVoter?.id);
 
-  if (phase === 'queue') {
+  if (phase === "queue") {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-6">
         <div className="max-w-md w-full text-center space-y-8">
           <div className="space-y-3">
             <p className="text-slate-400 text-base">I-pass ang telepono kay</p>
             <h1 className="text-4xl font-black tracking-tight text-white">
-              {currentVoter?.name ?? '...'}
+              {currentVoter?.name ?? "..."}
             </h1>
           </div>
 
@@ -61,7 +66,7 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -69,7 +74,9 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
       <div className="max-w-md mx-auto w-full space-y-6">
         <div className="text-center">
           <h2 className="text-2xl font-black">Sino ang Impostor?</h2>
-          <p className="text-slate-400 text-sm mt-1">Bumoto ka, {currentVoter?.name}</p>
+          <p className="text-slate-400 text-sm mt-1">
+            Bumoto ka, {currentVoter?.name}
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -83,8 +90,8 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
                 transition-all border-2
                 ${
                   selectedSuspectId === player.id
-                    ? 'bg-red-900 border-red-500 text-white'
-                    : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
+                    ? "bg-red-900 border-red-500 text-white"
+                    : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
                 }
               `}
             >
@@ -93,8 +100,8 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
                   w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0
                   ${
                     selectedSuspectId === player.id
-                      ? 'border-red-400 bg-red-500'
-                      : 'border-slate-500'
+                      ? "border-red-400 bg-red-500"
+                      : "border-slate-500"
                   }
                 `}
               >
@@ -121,5 +128,5 @@ export function VotingScreen({ players, currentPlayerIndex, onVote }: Props) {
         </button>
       </div>
     </div>
-  )
+  );
 }

@@ -1,21 +1,25 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import type { ImpostorWord } from '@/types/impostor'
+import { useState } from "react";
+import type { ImpostorWord } from "@/types/impostor";
 
 interface Props {
-  impostorName: string
-  secretWord: ImpostorWord | null
-  onSubmitGuess: (guess: string) => void
+  impostorName: string;
+  secretWord: ImpostorWord | null;
+  onSubmitGuess: (guess: string) => void;
 }
 
-export function ImpostorGuessScreen({ impostorName, secretWord, onSubmitGuess }: Props) {
-  const [guess, setGuess] = useState('')
+export function ImpostorGuessScreen({
+  impostorName,
+  secretWord,
+  onSubmitGuess,
+}: Props) {
+  const [guess, setGuess] = useState("");
 
   function handleSubmit() {
-    const trimmed = guess.trim()
-    if (!trimmed) return
-    onSubmitGuess(trimmed)
+    const trimmed = guess.trim();
+    if (!trimmed) return;
+    onSubmitGuess(trimmed);
   }
 
   return (
@@ -42,7 +46,9 @@ export function ImpostorGuessScreen({ impostorName, secretWord, onSubmitGuess }:
             <p className="text-blue-300 text-xs uppercase tracking-widest font-bold mb-1">
               Kategorya
             </p>
-            <p className="text-white text-2xl font-black">{secretWord.category}</p>
+            <p className="text-white text-2xl font-black">
+              {secretWord.category}
+            </p>
           </div>
         )}
 
@@ -51,7 +57,7 @@ export function ImpostorGuessScreen({ impostorName, secretWord, onSubmitGuess }:
             type="text"
             value={guess}
             onChange={(e) => setGuess(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             placeholder="Isulat ang iyong hula..."
             autoFocus
             className="
@@ -77,5 +83,5 @@ export function ImpostorGuessScreen({ impostorName, secretWord, onSubmitGuess }:
         </button>
       </div>
     </div>
-  )
+  );
 }

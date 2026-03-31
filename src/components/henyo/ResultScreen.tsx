@@ -1,46 +1,46 @@
-'use client'
+"use client";
 
-import type { WordAttempt, GameSession } from '@/types/henyo'
+import type { WordAttempt, GameSession } from "@/types/henyo";
 
 interface Props {
-  attempt: WordAttempt
-  session: GameSession
-  onNext: () => void
+  attempt: WordAttempt;
+  session: GameSession;
+  onNext: () => void;
 }
 
 function formatTime(secs: number): string {
-  const m = Math.floor(secs / 60)
-  const s = secs % 60
-  return `${m}:${String(s).padStart(2, '0')}`
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return `${m}:${String(s).padStart(2, "0")}`;
 }
 
 export function ResultScreen({ attempt, session, onNext }: Props) {
-  const isWin = attempt.result === 'correct'
-  const isTimeout = attempt.result === 'timeout'
-  const wordCount = session.settings.wordCount
-  const wordsPlayed = session.attempts.length
+  const isWin = attempt.result === "correct";
+  const isTimeout = attempt.result === "timeout";
+  const wordCount = session.settings.wordCount;
+  const wordsPlayed = session.attempts.length;
 
   return (
     <div
       className={`min-h-screen flex flex-col items-center justify-center px-6 text-white
-        ${isWin ? 'bg-green-900' : 'bg-slate-900'}
+        ${isWin ? "bg-green-900" : "bg-slate-900"}
       `}
     >
       {/* Result headline */}
       <div className="text-center mb-8">
         <p
           className={`font-black text-7xl mb-2 ${
-            isWin ? 'text-green-300' : 'text-red-400'
+            isWin ? "text-green-300" : "text-red-400"
           }`}
         >
-          {isWin ? 'TAMA!' : 'ULIT!'}
+          {isWin ? "TAMA!" : "ULIT!"}
         </p>
         <p className="text-slate-300 text-lg">
           {isWin
-            ? 'Nahulaan mo!'
+            ? "Nahulaan mo!"
             : isTimeout
-            ? 'Naubos ang oras!'
-            : 'Na-pass ang salita'}
+              ? "Naubos ang oras!"
+              : "Na-pass ang salita"}
         </p>
       </div>
 
@@ -49,20 +49,26 @@ export function ResultScreen({ attempt, session, onNext }: Props) {
         <p className="text-slate-400 text-sm mb-1">Ang salita ay:</p>
         <p className="font-black text-4xl uppercase">{attempt.word.word}</p>
         {attempt.word.hint && (
-          <p className="text-slate-500 text-sm mt-2 italic">{attempt.word.hint}</p>
+          <p className="text-slate-500 text-sm mt-2 italic">
+            {attempt.word.hint}
+          </p>
         )}
       </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-8">
         <div className="bg-slate-800 rounded-xl px-4 py-4 text-center">
-          <p className="text-slate-400 text-xs uppercase tracking-widest mb-1">Oras</p>
+          <p className="text-slate-400 text-xs uppercase tracking-widest mb-1">
+            Oras
+          </p>
           <p className="font-black text-2xl">
-            {isWin ? formatTime(attempt.timeUsed) : '—'}
+            {isWin ? formatTime(attempt.timeUsed) : "—"}
           </p>
         </div>
         <div className="bg-slate-800 rounded-xl px-4 py-4 text-center">
-          <p className="text-slate-400 text-xs uppercase tracking-widest mb-1">Score</p>
+          <p className="text-slate-400 text-xs uppercase tracking-widest mb-1">
+            Score
+          </p>
           <p className="font-black text-2xl">
             {session.score}/{wordsPlayed}
           </p>
@@ -72,21 +78,21 @@ export function ResultScreen({ attempt, session, onNext }: Props) {
       {/* Progress dots */}
       <div className="flex gap-2 mb-8">
         {Array.from({ length: wordCount }).map((_, i) => {
-          const attemptAt = session.attempts[i]
+          const attemptAt = session.attempts[i];
           return (
             <div
               key={i}
               className={`w-3 h-3 rounded-full ${
                 i < session.attempts.length
-                  ? attemptAt?.result === 'correct'
-                    ? 'bg-green-500'
-                    : 'bg-red-500'
+                  ? attemptAt?.result === "correct"
+                    ? "bg-green-500"
+                    : "bg-red-500"
                   : i === session.currentIndex
-                  ? 'bg-blue-500'
-                  : 'bg-slate-600'
+                    ? "bg-blue-500"
+                    : "bg-slate-600"
               }`}
             />
-          )
+          );
         })}
       </div>
 
@@ -97,5 +103,5 @@ export function ResultScreen({ attempt, session, onNext }: Props) {
         SUSUNOD
       </button>
     </div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import type { Player } from '@/types/impostor'
+import type { Player } from "@/types/impostor";
 
 interface Props {
-  player: Player
-  onReady: () => void
+  player: Player;
+  onReady: () => void;
 }
 
 export function RoleRevealQueueScreen({ player, onReady }: Props) {
@@ -13,7 +13,9 @@ export function RoleRevealQueueScreen({ player, onReady }: Props) {
       <div className="max-w-md w-full text-center space-y-8">
         <div className="space-y-3">
           <p className="text-slate-400 text-base">I-pass ang telepono kay</p>
-          <h1 className="text-4xl font-black tracking-tight text-white">{player.name}</h1>
+          <h1 className="text-4xl font-black tracking-tight text-white">
+            {player.name}
+          </h1>
         </div>
 
         <div className="bg-slate-800 rounded-2xl px-6 py-4">
@@ -34,5 +36,5 @@ export function RoleRevealQueueScreen({ player, onReady }: Props) {
         </button>
       </div>
     </div>
-  )
+  );
 }
