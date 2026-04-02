@@ -6,16 +6,15 @@ import { Games } from "@/components/home/Games";
 import { Hero } from "@/components/home/Hero";
 import { Nav } from "@/components/home/Nav";
 import { Stats } from "@/components/home/Stats";
-import type { Filter, Lang } from "@/lib/home/games";
+import type { Filter, } from "@/lib/home/games";
 
 const HomePage = () => {
-  const [lang, setLang] = useState<Lang>("en");
   const [filter, setFilter] = useState<Filter>("all");
 
   return (
     <>
-      <Nav lang={lang} onLangChange={setLang} />
-      <Hero lang={lang} />
+      <Nav />
+      <Hero />
       <Stats />
       <Games filter={filter} onFilterChange={setFilter} />
       <Footer />

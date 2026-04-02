@@ -1,10 +1,6 @@
-import { COPY, type Lang } from "@/lib/home/games";
 
-interface Props {
-  lang: Lang;
-}
 
-export const Hero = ({ lang }: Props) => {
+export const Hero = () => {
   return (
     <section className="text-center px-6 pt-[72px] pb-12 max-w-[720px] mx-auto">
       <div
@@ -15,20 +11,20 @@ export const Hero = ({ lang }: Props) => {
           color: "#80a8ff",
         }}
       >
-        🇵🇭 Free Filipino Party Games
+          Free Party Games
       </div>
       <h1
         className="font-black leading-[1.05] mb-4"
         style={{ fontSize: "clamp(2.4rem,8vw,4rem)", letterSpacing: "-2px" }}
       >
-        <span style={{ color: "var(--gold)" }}>Laro</span>{" "}
-        <span style={{ color: "var(--red)" }}>Na!</span>
+        <span style={{ color: "var(--gold)" }}>Barkada</span>{" "}
+        <span style={{ color: "var(--red)" }}>Hub</span>
       </h1>
       <p
         className="text-[1.05rem] max-w-[480px] mx-auto mb-8"
         style={{ color: "var(--muted)" }}
       >
-        {COPY[lang].heroSub}
+        The free, browser-based party game hub. No download, no login — just pick a game and play.
       </p>
       <a
         href="#games"

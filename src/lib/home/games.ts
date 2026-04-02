@@ -1,20 +1,4 @@
-export type Lang = "en" | "fil";
 export type Filter = "all" | "solo" | "multi" | "available";
-
-export const COPY: Record<Lang, { heroSub: string; roomSub: string }> = {
-  en: {
-    heroSub:
-      "The free, browser-based Filipino party game hub. No download, no login — just pick a game and play.",
-    roomSub:
-      "Create a room and share the code — everyone joins from their own device.",
-  },
-  fil: {
-    heroSub:
-      "Libreng Filipino party game hub. Walang download, walang login — pumili lang ng laro at maglaro na!",
-    roomSub:
-      "Gumawa ng room at ibahagi ang code — sasali ang lahat mula sa sarili nilang phone.",
-  },
-};
 
 export interface Game {
   slug: string;
@@ -55,17 +39,6 @@ export const SOLO_GAMES: Game[] = [
     players: "4–12 players",
   },
   {
-    slug: "truths",
-    icon: "🤔",
-    iconBg: "rgba(206,17,38,0.1)",
-    nameEn: "Two Truths, One Lie",
-    nameFil: "Totoo o Gawa-Gawa",
-    desc: "Each player shares 3 statements — 2 true, 1 false. The group votes on which one is the lie. Great for getting to know your barkada.",
-    type: "solo",
-    status: "soon",
-    players: "3+ players",
-  },
-  {
     slug: "never",
     icon: "✋",
     iconBg: "rgba(167,139,250,0.1)",
@@ -101,17 +74,6 @@ export const SOLO_GAMES: Game[] = [
 ];
 
 export const MULTI_GAMES: Game[] = [
-  {
-    slug: "palakpakan",
-    icon: "😂",
-    iconBg: "rgba(251,146,60,0.1)",
-    nameEn: "Palakpakan",
-    nameFil: "Pinakamagaling na sagot!",
-    desc: "A funny Filipino prompt appears — everyone submits their wittiest answer anonymously. The group votes for the best one. Tagalog humor guaranteed.",
-    type: "multi",
-    status: "soon",
-    players: "3–10 players",
-  },
   {
     slug: "bingo",
     icon: "🎰",

@@ -17,7 +17,7 @@ export const Footer = () => {
           Report a Bug
         </a>
       </p>
-      <p className="mt-2 text-[0.75rem]">No login. No download. Libre. 🇵🇭</p>
+      <p className="mt-2 text-[0.75rem]">No login. No download. Free.</p>
     </footer>
   );
 };
