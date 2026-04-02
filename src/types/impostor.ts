@@ -33,6 +33,7 @@ export interface GameSettings {
   category: string;
   clueRounds: number;
   language: Language;
+  numImpostors: number;
 }
 
 // Alias for spec compatibility
@@ -47,7 +48,7 @@ export interface ImpostorSession {
   settings: GameSettings;
   players: Player[];
   secretWord: ImpostorWord | null;
-  impostorId: string;
+  impostorIds: string[];
   currentRound: number;
   currentPlayerIndex: number;
   votes: Vote[];

@@ -3,9 +3,10 @@ import type { Player } from "@/types/impostor";
 
 export const assignRoles = (
   playerNames: string[],
+  numImpostors = 1,
 ): {
   players: Player[];
-  impostorId: string;
+  impostorIds: string[];
 } => {
   const players: Player[] = playerNames.map((name, i) => ({
     id: `player-${i}`,
@@ -15,13 +16,12 @@ export const assignRoles = (
   }));
 
   const shuffled = shuffle([...players]);
-  const impostor = shuffled[0];
-  impostor.role = "impostor";
+  const impostorIds = shuffled.slice(0, numImpostors).map((p) => p.id);
 
   return {
     players: players.map((p) =>
-      p.id === impostor.id ? { ...p, role: "impostor" as const } : p,
+      impostorIds.includes(p.id) ? { ...p, role: "impostor" as const } : p,
     ),
-    impostorId: impostor.id,
+    impostorIds,
   };
 };

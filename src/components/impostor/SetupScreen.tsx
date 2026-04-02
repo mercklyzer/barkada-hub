@@ -13,6 +13,12 @@ interface Props {
 
 const CLUE_ROUND_OPTIONS = [2, 3, 5];
 
+const getImpostorOptions = (playerCount: number): number[] => {
+  if (playerCount <= 3) return [1];
+  if (playerCount === 4) return [1, 2];
+  return [1, 2, 3];
+};
+
 // ---------------------------------------------------------------------------
 // PlayerInputList
 // ---------------------------------------------------------------------------
@@ -122,6 +128,49 @@ const ClueRoundPicker = ({ value, onChange }: ClueRoundPickerProps) => {
 };
 
 // ---------------------------------------------------------------------------
+// ImpostorCountPicker
+// ---------------------------------------------------------------------------
+
+interface ImpostorCountPickerProps {
+  value: number;
+  onChange: (n: number) => void;
+  playerCount: number;
+}
+
+const ImpostorCountPicker = ({
+  value,
+  onChange,
+  playerCount,
+}: ImpostorCountPickerProps) => {
+  const options = getImpostorOptions(playerCount);
+  return (
+    <section>
+      <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
+        Ilang Impostor?
+      </h2>
+      <div className="grid grid-cols-3 gap-2">
+        {options.map((n) => (
+          <button
+            key={n}
+            onClick={() => onChange(n)}
+            className={`
+              py-4 rounded-xl font-bold text-2xl min-h-16 transition-all
+              ${
+                value === n
+                  ? "bg-red-600 text-white ring-2 ring-red-400"
+                  : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              }
+            `}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// ---------------------------------------------------------------------------
 // ErrorMessage
 // ---------------------------------------------------------------------------
 
@@ -146,10 +195,11 @@ export const SetupScreen = ({
   const [playerNames, setPlayerNames] = useState<string[]>(
     initialPlayers && initialPlayers.length >= 3
       ? initialPlayers
-      : ["", "", "", ""],
+      : ["", "", ""],
   );
   const [category, setCategory] = useState("random");
   const [clueRounds, setClueRounds] = useState(3);
+  const [numImpostors, setNumImpostors] = useState(1);
   const [language, setLanguage] = useState<Language>("filipino");
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -167,7 +217,12 @@ export const SetupScreen = ({
 
   const removePlayer = (index: number) => {
     if (playerNames.length > 3) {
-      setPlayerNames((prev) => prev.filter((_, i) => i !== index));
+      const next = playerNames.filter((_, i) => i !== index);
+      setPlayerNames(next);
+      const opts = getImpostorOptions(next.filter((n) => n.trim() !== "").length);
+      if (!opts.includes(numImpostors)) {
+        setNumImpostors(opts[opts.length - 1]);
+      }
     }
   };
 
@@ -178,8 +233,13 @@ export const SetupScreen = ({
       return;
     }
     setValidationError(null);
-    onStart({ players: filled, category, clueRounds, language });
+    onStart({ players: filled, category, clueRounds, language, numImpostors });
   };
+
+  const startIsDisabled = isLoading
+    || playerNames.filter((n) => n.trim() !== "").length < 3
+    || !numImpostors
+    || !clueRounds;
 
   const displayError = validationError ?? error;
 
@@ -204,11 +264,17 @@ export const SetupScreen = ({
 
         <ClueRoundPicker value={clueRounds} onChange={setClueRounds} />
 
+        <ImpostorCountPicker
+          value={numImpostors}
+          onChange={setNumImpostors}
+          playerCount={playerNames.filter((n) => n.trim() !== "").length}
+        />
+
         {displayError && <ErrorMessage message={displayError} />}
 
         <button
           onClick={handleStart}
-          disabled={isLoading}
+          disabled={startIsDisabled}
           className="
             w-full py-5 rounded-2xl font-black text-2xl tracking-widest
             bg-green-600 hover:bg-green-500 active:bg-green-700

@@ -113,7 +113,9 @@ export const ImpostorGame = () => {
   }
 
   if (gameState === "impostor_guess") {
-    const impostor = session.players.find((p) => p.id === session.impostorId);
+    const impostor = session.players.find((p) =>
+      session.impostorIds.includes(p.id),
+    );
     if (!impostor) return null;
     return (
       <ImpostorGuessScreen

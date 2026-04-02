@@ -12,11 +12,11 @@ interface Props {
 const VoteTallyList = ({
   players,
   tallies,
-  impostorId,
+  impostorIds,
 }: {
   players: Player[];
   tallies: Record<string, number>;
-  impostorId: string;
+  impostorIds: string[];
 }) => {
   const sorted = players
     .slice()
@@ -32,18 +32,19 @@ const VoteTallyList = ({
       <ul>
         {sorted.map((player, i) => {
           const count = tallies[player.id] ?? 0;
+          const isImpostor = impostorIds.includes(player.id);
           return (
             <li
               key={player.id}
               className={`
                 flex items-center justify-between px-4 py-3
                 ${i < players.length - 1 ? "border-b border-slate-700" : ""}
-                ${player.id === impostorId ? "bg-slate-700/50" : ""}
+                ${isImpostor ? "bg-slate-700/50" : ""}
               `}
             >
               <div className="flex items-center gap-2">
                 <span className="font-bold text-white">{player.name}</span>
-                {player.id === impostorId && (
+                {isImpostor && (
                   <span className="text-xs bg-red-800 text-red-300 rounded-full px-2 py-0.5 font-bold">
                     IMPOSTOR
                   </span>
@@ -105,14 +106,15 @@ export const ResultsScreen = ({
   onNextRound,
   onViewScoreboard,
 }: Props) => {
-  const { players, impostorId, secretWord, outcome, votes, impostorGuess } =
+  const { players, impostorIds, secretWord, outcome, votes, impostorGuess } =
     session;
-  const impostor = players.find((p) => p.id === impostorId);
+  const impostors = players.filter((p) => impostorIds.includes(p.id));
   const impostorWins = outcome === "impostor_wins";
 
   const voteTallies = tallyVotes(votes);
   const topVoteId = votes.length > 0 ? getTopVoteId(voteTallies) : "";
-  const impostorCaughtByVote = topVoteId === impostorId;
+  const impostorCaughtByVote = impostorIds.includes(topVoteId);
+  const caughtImpostor = players.find((p) => p.id === topVoteId && impostorIds.includes(p.id));
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-6 overflow-y-auto">
@@ -134,8 +136,8 @@ export const ResultsScreen = ({
           {impostorCaughtByVote && impostorGuess !== null && (
             <p className="text-sm mt-2 opacity-80">
               {impostorWins
-                ? `Inimbes ang pagkakataon ni ${impostor?.name} — tama ang hula!`
-                : `Mali ang hula ni ${impostor?.name}.`}
+                ? `Inimbes ang pagkakataon ni ${caughtImpostor?.name} — tama ang hula!`
+                : `Mali ang hula ni ${caughtImpostor?.name}.`}
             </p>
           )}
           {!impostorCaughtByVote && votes.length > 0 && impostorWins && (
@@ -148,10 +150,12 @@ export const ResultsScreen = ({
         {/* Impostor reveal */}
         <div className="bg-slate-800 rounded-2xl px-5 py-5">
           <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-            Ang Impostor
+            {impostors.length > 1 ? "Ang mga Impostor" : "Ang Impostor"}
           </p>
           <p className="text-2xl font-black text-white">
-            {impostor?.name ?? "?"}
+            {impostors.length > 0
+              ? impostors.map((p) => p.name).join(", ")
+              : "?"}
           </p>
         </div>
 
@@ -171,7 +175,7 @@ export const ResultsScreen = ({
               <p
                 className={`text-sm mt-2 font-bold ${impostorWins ? "text-green-400" : "text-red-400"}`}
               >
-                Hula ni {impostor?.name}: &ldquo;{impostorGuess}&rdquo;
+                Hula ni {caughtImpostor?.name ?? impostors[0]?.name}: &ldquo;{impostorGuess}&rdquo;
                 {impostorWins ? " — TAMA!" : " — Mali!"}
               </p>
             )}
@@ -182,7 +186,7 @@ export const ResultsScreen = ({
           <VoteTallyList
             players={players}
             tallies={voteTallies}
-            impostorId={impostorId}
+            impostorIds={impostorIds}
           />
         )}
 

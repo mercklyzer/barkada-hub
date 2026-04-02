@@ -66,7 +66,10 @@ export const useImpostorGame = (): UseImpostorGame => {
         const shuffledWords = shuffle([...words]);
         const secretWord = shuffledWords[0];
 
-        const { players, impostorId } = assignRoles(settings.players);
+        const { players, impostorIds } = assignRoles(
+          settings.players,
+          settings.numImpostors,
+        );
 
         const existingScores = session?.sessionScores ?? {};
         const sessionScores: Record<string, number> = Object.fromEntries(
@@ -77,7 +80,7 @@ export const useImpostorGame = (): UseImpostorGame => {
           settings,
           players,
           secretWord,
-          impostorId,
+          impostorIds,
           currentRound: 1,
           currentPlayerIndex: 0,
           votes: [],
@@ -178,11 +181,13 @@ export const useImpostorGame = (): UseImpostorGame => {
       // All players voted — tally
       const tallies = tallyVotes(newVotes);
       const topSuspectId = getTopVoteId(tallies);
-      const impostorCaught = topSuspectId === prev.impostorId;
+      const impostorCaught = prev.impostorIds.includes(topSuspectId);
 
       if (!impostorCaught) {
         const newScores = { ...prev.sessionScores };
-        newScores[prev.impostorId] = (newScores[prev.impostorId] ?? 0) + 1;
+        for (const id of prev.impostorIds) {
+          newScores[id] = (newScores[id] ?? 0) + 1;
+        }
 
         captureEvent("impostor_round_completed", {
           outcome: "impostor_wins",
@@ -220,10 +225,12 @@ export const useImpostorGame = (): UseImpostorGame => {
 
       const newScores = { ...prev.sessionScores };
       if (correct) {
-        newScores[prev.impostorId] = (newScores[prev.impostorId] ?? 0) + 1;
+        for (const id of prev.impostorIds) {
+          newScores[id] = (newScores[id] ?? 0) + 1;
+        }
       } else {
         for (const p of prev.players) {
-          if (p.id !== prev.impostorId) {
+          if (!prev.impostorIds.includes(p.id)) {
             newScores[p.id] = (newScores[p.id] ?? 0) + 1;
           }
         }
