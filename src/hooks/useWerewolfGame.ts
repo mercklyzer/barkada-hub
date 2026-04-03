@@ -28,6 +28,7 @@ export const useWerewolfGame = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isConnected, setIsConnected] = useState(true);
 
   // Per-phase UI flags
   const [hasEyesClosed, setHasEyesClosed] = useState(false);
@@ -43,6 +44,13 @@ export const useWerewolfGame = () => {
   const prevPhaseRef = useRef<WerewolfGamePhase | null>(null);
   const resolvingNightRef = useRef(false);
   const advancingRoleRevealRef = useRef(false);
+
+  // Abort controller aborted on unmount — cancels all in-flight fetches at once
+  const abortControllerRef = useRef<AbortController | null>(null);
+  // Guards setState calls in async functions after unmount
+  const isUnmountedRef = useRef(false);
+  // Holds latest loadRoom reference to break circular dep with subscribe's status callback
+  const loadRoomRef = useRef<((code: string) => Promise<void>) | null>(null);
 
   // Derived
   const myPlayer =
@@ -115,7 +123,22 @@ export const useWerewolfGame = () => {
           return [...prev, pid];
         });
       })
-      .subscribe();
+      .subscribe((status: string) => {
+        if (status === "SUBSCRIBED") {
+          setIsConnected(true);
+        } else if (
+          status === "CHANNEL_ERROR" ||
+          status === "TIMED_OUT" ||
+          status === "CLOSED"
+        ) {
+          setIsConnected(false);
+          // Only reconnect on unexpected closure — leaveRoom nulls both refs
+          // before unsubscribing, so this guard prevents spurious reconnects
+          if (!isUnmountedRef.current && channelRef.current && roomCodeRef.current) {
+            loadRoomRef.current?.(roomCodeRef.current).catch(() => {});
+          }
+        }
+      });
 
     channelRef.current = channel;
   }, []);
@@ -166,8 +189,9 @@ export const useWerewolfGame = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerId: playerIdRef.current }),
-      }).catch(() => {
-        resolvingNightRef.current = false;
+        signal: abortControllerRef.current?.signal,
+      }).catch((e: Error) => {
+        if (e.name !== "AbortError") resolvingNightRef.current = false;
       });
     }
   }, [nightActionSignals, isHost, room?.phase, players]);
@@ -187,8 +211,9 @@ export const useWerewolfGame = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerId: playerIdRef.current }),
-      }).catch(() => {
-        advancingRoleRevealRef.current = false;
+        signal: abortControllerRef.current?.signal,
+      }).catch((e: Error) => {
+        if (e.name !== "AbortError") advancingRoleRevealRef.current = false;
       });
     }
   }, [roleConfirmSignals, isHost, room?.phase, players.length]);
@@ -202,10 +227,13 @@ export const useWerewolfGame = () => {
     try {
       const res = await fetch(
         `/api/werewolf/rooms/${code}/my-role?playerId=${pid}`,
+        { signal: abortControllerRef.current?.signal },
       );
       if (res.ok) {
         const data = await res.json();
-        setRoleData(data as MyRoleResponse);
+        if (!isUnmountedRef.current) {
+          setRoleData(data as MyRoleResponse);
+        }
       }
     } catch {
       // non-critical
@@ -216,9 +244,13 @@ export const useWerewolfGame = () => {
 
   const loadRoom = useCallback(
     async (code: string) => {
-      const res = await fetch(`/api/werewolf/rooms/${code}`);
+      const res = await fetch(`/api/werewolf/rooms/${code}`, {
+        signal: abortControllerRef.current?.signal,
+      });
       if (!res.ok) throw new Error("Room not found");
+      if (isUnmountedRef.current) return;
       const data = await res.json();
+      if (isUnmountedRef.current) return;
       setRoom(data.room as WerewolfRoom);
       setPlayers(data.players as WerewolfPlayer[]);
       subscribe(code, (data.room as WerewolfRoom).id);
@@ -229,19 +261,70 @@ export const useWerewolfGame = () => {
     [subscribe, fetchMyRole],
   );
 
+  // Keep loadRoomRef current so the subscribe status callback can call it
+  // without creating a circular useCallback dependency
+  useEffect(() => {
+    loadRoomRef.current = loadRoom;
+  }, [loadRoom]);
+
   // ─── Init: restore session on mount ──────────────────────────────────────
 
   useEffect(() => {
+    // Reset unmount flag (React Strict Mode fires this effect twice in dev)
+    isUnmountedRef.current = false;
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     playerIdRef.current = getOrCreatePlayerId();
     const savedCode = sessionStorage.getItem("werewolf_room_code");
+
     if (savedCode) {
       roomCodeRef.current = savedCode;
-      loadRoom(savedCode).catch(() => {
-        sessionStorage.removeItem("werewolf_room_code");
+      loadRoom(savedCode).catch((e: Error) => {
+        if (e.name !== "AbortError" && !isUnmountedRef.current) {
+          // One retry after 1.5s to recover from brief network blips on page load
+          setTimeout(() => {
+            if (!isUnmountedRef.current && roomCodeRef.current) {
+              loadRoom(savedCode).catch(() => {
+                if (!isUnmountedRef.current) {
+                  sessionStorage.removeItem("werewolf_room_code");
+                  roomCodeRef.current = "";
+                }
+              });
+            }
+          }, 1500);
+        }
       });
     }
-    return () => {
+
+    const handleUnload = () => {
+      // Best-effort: initiate WebSocket leave frame before browser closes
       channelRef.current?.unsubscribe();
+    };
+
+    const handleVisibilityChange = () => {
+      // Re-sync state when user returns to tab — catches missed Realtime events
+      if (
+        document.visibilityState === "visible" &&
+        roomCodeRef.current &&
+        !isUnmountedRef.current
+      ) {
+        loadRoom(roomCodeRef.current).catch(() => {});
+      }
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+    window.addEventListener("pagehide", handleUnload); // iOS Safari coverage
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      isUnmountedRef.current = true;
+      controller.abort();
+      channelRef.current?.unsubscribe();
+      channelRef.current = null;
+      window.removeEventListener("beforeunload", handleUnload);
+      window.removeEventListener("pagehide", handleUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
     // loadRoom is stable
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -261,19 +344,23 @@ export const useWerewolfGame = () => {
             playerName,
             playerId: playerIdRef.current,
           }),
+          signal: abortControllerRef.current?.signal,
         });
+        if (isUnmountedRef.current) return;
         if (!res.ok) {
           const d = await res.json();
           throw new Error(d.error ?? "Failed to create room");
         }
         const { roomCode } = await res.json();
+        if (isUnmountedRef.current) return;
         roomCodeRef.current = roomCode;
         sessionStorage.setItem("werewolf_room_code", roomCode);
         await loadRoom(roomCode);
       } catch (e) {
-        setError((e as Error).message);
+        if ((e as Error).name === "AbortError") return;
+        if (!isUnmountedRef.current) setError((e as Error).message);
       } finally {
-        setIsLoading(false);
+        if (!isUnmountedRef.current) setIsLoading(false);
       }
     },
     [loadRoom],
@@ -292,7 +379,9 @@ export const useWerewolfGame = () => {
             playerName,
             playerId: playerIdRef.current,
           }),
+          signal: abortControllerRef.current?.signal,
         });
+        if (isUnmountedRef.current) return;
         if (!res.ok) {
           const d = await res.json();
           throw new Error(d.error ?? "Failed to join room");
@@ -301,9 +390,10 @@ export const useWerewolfGame = () => {
         sessionStorage.setItem("werewolf_room_code", upperCode);
         await loadRoom(upperCode);
       } catch (e) {
-        setError((e as Error).message);
+        if ((e as Error).name === "AbortError") return;
+        if (!isUnmountedRef.current) setError((e as Error).message);
       } finally {
-        setIsLoading(false);
+        if (!isUnmountedRef.current) setIsLoading(false);
       }
     },
     [loadRoom],
@@ -319,16 +409,19 @@ export const useWerewolfGame = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ playerId: playerIdRef.current }),
+          signal: abortControllerRef.current?.signal,
         },
       );
+      if (isUnmountedRef.current) return;
       if (!res.ok) {
         const d = await res.json();
         throw new Error(d.error ?? "Failed to start game");
       }
     } catch (e) {
-      setError((e as Error).message);
+      if ((e as Error).name === "AbortError") return;
+      if (!isUnmountedRef.current) setError((e as Error).message);
     } finally {
-      setIsLoading(false);
+      if (!isUnmountedRef.current) setIsLoading(false);
     }
   }, []);
 
@@ -373,10 +466,13 @@ export const useWerewolfGame = () => {
               actionType,
               targetId: targetPlayerId,
             }),
+            signal: abortControllerRef.current?.signal,
           },
         );
-        if (!res.ok) return null;
+        if (!res.ok || isUnmountedRef.current) return null;
         const data = await res.json();
+
+        if (isUnmountedRef.current) return null;
 
         // Broadcast signal to host for auto-resolve tracking
         channelRef.current?.send({
@@ -410,10 +506,13 @@ export const useWerewolfGame = () => {
             playerId: playerIdRef.current,
             targetId: targetPlayerId,
           }),
+          signal: abortControllerRef.current?.signal,
         });
-        setHasVoted(true);
-        if (typeof navigator !== "undefined" && "vibrate" in navigator) {
-          navigator.vibrate(30);
+        if (!isUnmountedRef.current) {
+          setHasVoted(true);
+          if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+            navigator.vibrate(30);
+          }
         }
       } catch {
         // non-critical
@@ -428,6 +527,7 @@ export const useWerewolfGame = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerId: playerIdRef.current }),
+        signal: abortControllerRef.current?.signal,
       });
     } catch {
       // non-critical
@@ -435,18 +535,21 @@ export const useWerewolfGame = () => {
   }, []);
 
   const resetGame = useCallback(async () => {
-    setRoleData(null);
-    setNightActionSignals([]);
-    setRoleConfirmSignals([]);
-    setHasEyesClosed(false);
-    setHasSubmittedNightAction(false);
-    setHasVoted(false);
-    setSeerPeekResult(null);
+    if (!isUnmountedRef.current) {
+      setRoleData(null);
+      setNightActionSignals([]);
+      setRoleConfirmSignals([]);
+      setHasEyesClosed(false);
+      setHasSubmittedNightAction(false);
+      setHasVoted(false);
+      setSeerPeekResult(null);
+    }
     try {
       await fetch(`/api/werewolf/rooms/${roomCodeRef.current}/reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerId: playerIdRef.current }),
+        signal: abortControllerRef.current?.signal,
       });
     } catch {
       // non-critical
@@ -454,12 +557,16 @@ export const useWerewolfGame = () => {
   }, []);
 
   const leaveRoom = useCallback(() => {
-    channelRef.current?.unsubscribe();
+    // Null refs before unsubscribing so the channel status callback's
+    // reconnect guard fires correctly when CLOSED is emitted
+    const ch = channelRef.current;
+    channelRef.current = null;
+    roomCodeRef.current = "";
+    ch?.unsubscribe();
     sessionStorage.removeItem("werewolf_room_code");
     setRoom(null);
     setPlayers([]);
     setRoleData(null);
-    roomCodeRef.current = "";
     prevPhaseRef.current = null;
   }, []);
 
@@ -472,6 +579,7 @@ export const useWerewolfGame = () => {
     nightActionSignals,
     isLoading,
     error,
+    isConnected,
     hasEyesClosed,
     hasSubmittedNightAction,
     hasVoted,
