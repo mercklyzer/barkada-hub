@@ -19,7 +19,7 @@ export const DiscussionScreen = ({
   const eliminated = players.filter((p) => !p.is_alive);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8 animate-fade-in-up">
       <div className="text-center space-y-1 mb-8">
         <p className="text-xs uppercase tracking-widest text-slate-500">
           Discussion — Round {roundNumber}

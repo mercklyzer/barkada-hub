@@ -21,7 +21,7 @@ export const DayAnnouncementScreen = ({
   const noDeath = !killedPlayer;
 
   return (
-    <div className="min-h-screen bg-amber-950 text-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-amber-950 text-white flex flex-col items-center justify-center px-4 animate-fade-in-up">
       <div className="w-full max-w-sm text-center space-y-8">
         <div className="space-y-2">
           <div className="text-6xl">🌅</div>
@@ -31,7 +31,7 @@ export const DayAnnouncementScreen = ({
         </div>
 
         {noDeath ? (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-scale-in">
             <div className="text-5xl">✅</div>
             <h2 className="text-3xl font-black text-green-300">
               No One Died!
@@ -41,7 +41,7 @@ export const DayAnnouncementScreen = ({
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-scale-in">
             <div className="text-5xl">🪦</div>
             <h2 className="text-3xl font-black text-red-300">
               {killedPlayer?.name} is Dead

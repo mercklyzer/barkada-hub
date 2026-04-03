@@ -63,7 +63,7 @@ export const NightScreen = ({
 
   if (!hasEyesClosed) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center px-4 animate-fade-in-up">
         <div className="w-full max-w-sm text-center space-y-8">
           <div className="space-y-3">
             <div className="text-5xl">🌙</div>
@@ -91,7 +91,7 @@ export const NightScreen = ({
 
   if (role === "villager" || hasSubmittedNightAction) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center px-4 animate-fade-in-up">
         <div className="w-full max-w-sm text-center space-y-6">
           <div className="text-6xl animate-pulse">💤</div>
           {role === "seer" && seerPeekResult ? (
@@ -142,7 +142,7 @@ export const NightScreen = ({
 
   // Active role: show target selector
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col px-4 py-8">
+    <div className="min-h-screen bg-slate-950 text-white flex flex-col px-4 py-8 animate-fade-in-up">
       <div className="text-center space-y-2 mb-6">
         <p className={`text-xs uppercase tracking-widest ${ROLE_COLOR[role]}`}>
           {ROLE_LABEL[role]}

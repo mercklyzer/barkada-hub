@@ -57,7 +57,7 @@ export const RoleRevealScreen = ({ roleData, onConfirm }: Props) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center px-4 animate-fade-in-up">
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center space-y-1">
           <p className="text-xs uppercase tracking-widest text-slate-500">
@@ -126,14 +126,14 @@ export const RoleRevealScreen = ({ roleData, onConfirm }: Props) => {
 
         {flipped && (
           confirmed ? (
-            <div className="w-full py-4 bg-slate-800 border border-slate-600 rounded-xl text-center min-h-14 flex flex-col items-center justify-center gap-1">
+            <div className="w-full py-4 bg-slate-800 border border-slate-600 rounded-xl text-center min-h-14 flex flex-col items-center justify-center gap-1 animate-fade-in-up">
               <p className="font-black text-slate-300">Ready!</p>
               <p className="text-xs text-slate-500">Waiting for other players...</p>
             </div>
           ) : (
             <button
               onClick={handleConfirm}
-              className="w-full py-4 bg-slate-700 hover:bg-slate-600 rounded-xl font-black text-lg transition-colors min-h-14"
+              className="w-full py-4 bg-slate-700 hover:bg-slate-600 rounded-xl font-black text-lg transition-colors min-h-14 animate-fade-in-up"
             >
               I understand my role
             </button>

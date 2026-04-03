@@ -27,7 +27,7 @@ export const LobbyScreen = ({
   const canStart = players.length >= 4;
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8 animate-fade-in-up">
       <div className="flex items-center justify-between mb-8">
         <button
           onClick={onLeave}

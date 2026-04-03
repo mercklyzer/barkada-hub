@@ -59,7 +59,7 @@ export const EliminationScreen = ({
   const maxVotes = sortedTallies[0]?.count ?? 1;
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-8 animate-fade-in-up">
       <div className="text-center space-y-1 mb-8">
         <p className="text-xs uppercase tracking-widest text-slate-500">
           Vote Results
@@ -72,8 +72,12 @@ export const EliminationScreen = ({
           <p className="text-xs uppercase tracking-widest text-slate-500 mb-2">
             Votes
           </p>
-          {sortedTallies.map(({ player, count }) => (
-            <div key={player!.player_id} className="space-y-1">
+          {sortedTallies.map(({ player, count }, i) => (
+            <div
+              key={player!.player_id}
+              className="space-y-1 animate-fade-in-up"
+              style={{ animationDelay: `${i * 0.1}s`, animationFillMode: "both" }}
+            >
               <div className="flex justify-between text-sm">
                 <span className="font-bold">{player!.name}</span>
                 <span className="text-slate-400">{count}</span>
@@ -107,7 +111,7 @@ export const EliminationScreen = ({
             </p>
           </div>
         ) : (
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-4 animate-scale-in">
             <div className="text-6xl">{roleConfig?.icon}</div>
             <p className="text-2xl font-black text-white">
               <span className="text-red-300">{eliminated.name}</span> is...

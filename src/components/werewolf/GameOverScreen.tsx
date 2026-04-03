@@ -48,7 +48,7 @@ export const GameOverScreen = ({
 
   return (
     <div
-      className={`min-h-screen text-white flex flex-col px-4 py-8 transition-colors duration-1000 ${
+      className={`min-h-screen text-white flex flex-col px-4 py-8 transition-colors duration-1000 animate-fade-in-up ${
         winner === "village" ? "bg-green-950" : "bg-red-950"
       }`}
     >
@@ -69,11 +69,11 @@ export const GameOverScreen = ({
       </div>
 
       {rolesVisible && (
-        <div className="space-y-3 mb-10">
+        <div className="space-y-3 mb-10 animate-fade-in-up">
           <p className="text-xs uppercase tracking-widest text-slate-400 mb-2">
             Roles
           </p>
-          {sorted.map((p) => {
+          {sorted.map((p, i) => {
             const role = (finalRoles[p.player_id] ??
               p.role ??
               "villager") as WerewolfRole;
@@ -81,7 +81,8 @@ export const GameOverScreen = ({
             return (
               <div
                 key={p.player_id}
-                className="flex items-center gap-3 bg-black/20 rounded-xl px-4 py-3"
+                className="flex items-center gap-3 bg-black/20 rounded-xl px-4 py-3 animate-fade-in-up"
+                style={{ animationDelay: `${i * 0.08}s`, animationFillMode: "both" }}
               >
                 <span className="text-xl">{config.icon}</span>
                 <span className="font-bold flex-1">{p.name}</span>

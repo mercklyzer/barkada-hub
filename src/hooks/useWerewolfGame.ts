@@ -437,6 +437,7 @@ export const useWerewolfGame = () => {
   const resetGame = useCallback(async () => {
     setRoleData(null);
     setNightActionSignals([]);
+    setRoleConfirmSignals([]);
     setHasEyesClosed(false);
     setHasSubmittedNightAction(false);
     setHasVoted(false);
