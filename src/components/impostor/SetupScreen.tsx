@@ -219,7 +219,9 @@ export const SetupScreen = ({
     if (playerNames.length > 3) {
       const next = playerNames.filter((_, i) => i !== index);
       setPlayerNames(next);
-      const opts = getImpostorOptions(next.filter((n) => n.trim() !== "").length);
+      const opts = getImpostorOptions(
+        next.filter((n) => n.trim() !== "").length,
+      );
       if (!opts.includes(numImpostors)) {
         setNumImpostors(opts[opts.length - 1]);
       }
@@ -236,10 +238,11 @@ export const SetupScreen = ({
     onStart({ players: filled, category, clueRounds, language, numImpostors });
   };
 
-  const startIsDisabled = isLoading
-    || playerNames.filter((n) => n.trim() !== "").length < 3
-    || !numImpostors
-    || !clueRounds;
+  const startIsDisabled =
+    isLoading ||
+    playerNames.filter((n) => n.trim() !== "").length < 3 ||
+    !numImpostors ||
+    !clueRounds;
 
   const displayError = validationError ?? error;
 

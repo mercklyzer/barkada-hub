@@ -1,5 +1,3 @@
-
-
 export const Hero = () => {
   return (
     <section className="text-center px-6 pt-[72px] pb-12 max-w-[720px] mx-auto">
@@ -11,7 +9,7 @@ export const Hero = () => {
           color: "#80a8ff",
         }}
       >
-          Free Party Games
+        Free Party Games
       </div>
       <h1
         className="font-black leading-[1.05] mb-4"
@@ -24,7 +22,8 @@ export const Hero = () => {
         className="text-[1.05rem] max-w-[480px] mx-auto mb-8"
         style={{ color: "var(--muted)" }}
       >
-        The free, browser-based party game hub. No download, no login — just pick a game and play.
+        The free, browser-based party game hub. No download, no login — just
+        pick a game and play.
       </p>
       <a
         href="#games"

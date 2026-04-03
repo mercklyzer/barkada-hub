@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type {  } from "@/lib/home/games";
 
 export const Nav = () => {
   return (

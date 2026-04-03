@@ -114,7 +114,9 @@ export const ResultsScreen = ({
   const voteTallies = tallyVotes(votes);
   const topVoteId = votes.length > 0 ? getTopVoteId(voteTallies) : "";
   const impostorCaughtByVote = impostorIds.includes(topVoteId);
-  const caughtImpostor = players.find((p) => p.id === topVoteId && impostorIds.includes(p.id));
+  const caughtImpostor = players.find(
+    (p) => p.id === topVoteId && impostorIds.includes(p.id),
+  );
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col px-4 py-6 overflow-y-auto">
@@ -175,7 +177,8 @@ export const ResultsScreen = ({
               <p
                 className={`text-sm mt-2 font-bold ${impostorWins ? "text-green-400" : "text-red-400"}`}
               >
-                Hula ni {caughtImpostor?.name ?? impostors[0]?.name}: &ldquo;{impostorGuess}&rdquo;
+                Hula ni {caughtImpostor?.name ?? impostors[0]?.name}: &ldquo;
+                {impostorGuess}&rdquo;
                 {impostorWins ? " — TAMA!" : " — Mali!"}
               </p>
             )}

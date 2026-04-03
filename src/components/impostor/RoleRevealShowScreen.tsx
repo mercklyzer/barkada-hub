@@ -108,7 +108,11 @@ export const RoleRevealShowScreen = ({
             }
           `}
         >
-          {!revealed ? "I-tap ang card" : buttonUnlocked ? "NAKITA NA" : "Hintayin..."}
+          {!revealed
+            ? "I-tap ang card"
+            : buttonUnlocked
+              ? "NAKITA NA"
+              : "Hintayin..."}
         </button>
       </div>
     </div>

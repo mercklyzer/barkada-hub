@@ -75,6 +75,18 @@ export const SOLO_GAMES: Game[] = [
 
 export const MULTI_GAMES: Game[] = [
   {
+    slug: "werewolf",
+    href: "/werewolf",
+    icon: "🐺",
+    iconBg: "rgba(185,28,28,0.12)",
+    nameEn: "Werewolf",
+    nameFil: "Sino ang Lobo?",
+    desc: "Laro ng pagtatago at paghula. Bawat gabi, kumain ang mga lobo. Sa umaga, bomoto ang lahat. Mahanap ang mga lobo bago maging huli na ang lahat.",
+    type: "multi",
+    status: "available",
+    players: "4–15 players",
+  },
+  {
     slug: "bingo",
     icon: "🎰",
     iconBg: "rgba(167,139,250,0.1)",

@@ -28,7 +28,7 @@ Migrations live in `supabase/migrations/`. Run them via `supabase:push`.
 
 ## Architecture
 
-**Tambay Games** is a Filipino party game hub (no login required). Current games: Pinoy Henyo and Who's the Impostor.
+**Tambay Games** is a party game hub (no login required). Current games: Pinoy Henyo, Who's the Impostor, and The Werewolf Game.
 
 ### Stack
 
@@ -45,6 +45,7 @@ Each game fetches words from its API route (`/api/henyo/words`, `/api/impostor/w
 ### Game State
 
 Game logic lives in custom hooks:
+
 - `src/hooks/useHenyoGame.ts` — manages setup → countdown → playing → results → game-over states
 - `src/hooks/useImpostorGame.ts` — manages setup → role reveal → clue rounds → discussion → voting → results
 
@@ -57,13 +58,13 @@ Game logic lives in custom hooks:
 
 ### Environment Variables
 
-| Variable | Purpose |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key |
-| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog analytics key |
-| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog host URL |
-| `DATABASE_URL` | Direct DB URL (seed scripts only, never client-side) |
+| Variable                        | Purpose                                              |
+| ------------------------------- | ---------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL                                 |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key                                      |
+| `NEXT_PUBLIC_POSTHOG_KEY`       | PostHog analytics key                                |
+| `NEXT_PUBLIC_POSTHOG_HOST`      | PostHog host URL                                     |
+| `DATABASE_URL`                  | Direct DB URL (seed scripts only, never client-side) |
 
 Staging config in `.env.local`, production in `.env.production`.
 
