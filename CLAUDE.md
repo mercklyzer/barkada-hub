@@ -62,7 +62,7 @@ Game logic lives in custom hooks:
 | ------------------------------- | ---------------------------------------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL                                 |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key                                      |
-| `NEXT_PUBLIC_POSTHOG_KEY`       | PostHog analytics key                                |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN`       | PostHog analytics key                                |
 | `NEXT_PUBLIC_POSTHOG_HOST`      | PostHog host URL                                     |
 | `DATABASE_URL`                  | Direct DB URL (seed scripts only, never client-side) |
 
