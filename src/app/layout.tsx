@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
@@ -100,6 +101,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <PostHogProvider>
           <LanguageProvider>{children}</LanguageProvider>
         </PostHogProvider>
+        <Analytics />
       </body>
     </html>
   );
