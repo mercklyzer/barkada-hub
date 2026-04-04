@@ -70,16 +70,10 @@ const GameCardContent = ({ game }: { game: Game }) => {
       </div>
 
       <div
-        className="text-[1.05rem] font-extrabold leading-tight mb-0.5"
+        className="text-[1.05rem] font-extrabold leading-tight mb-2.5"
         style={{ color: "var(--text)" }}
       >
         {game.nameEn}
-      </div>
-      <div
-        className="text-[0.8rem] italic mb-2.5"
-        style={{ color: "var(--muted)" }}
-      >
-        {game.nameFil}
       </div>
       <div
         className="text-[0.85rem] leading-relaxed"

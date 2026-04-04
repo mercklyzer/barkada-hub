@@ -1,4 +1,4 @@
--- Seed file for Tambay Games
+-- Seed file for Barkada Hub
 -- Run: supabase db seed
 -- Individual game seeds are appended below by game agents
 

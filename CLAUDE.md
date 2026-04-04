@@ -28,7 +28,7 @@ Migrations live in `supabase/migrations/`. Run them via `supabase:push`.
 
 ## Architecture
 
-**Tambay Games** is a party game hub (no login required). Current games: Pinoy Henyo, Who's the Impostor, and The Werewolf Game.
+**Barkada Hub** is a party game hub (no login required). Current games: Pinoy Henyo, Who's the Impostor, and The Werewolf Game.
 
 ### Stack
 

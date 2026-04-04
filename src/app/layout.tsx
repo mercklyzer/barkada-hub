@@ -11,8 +11,8 @@ const BASE_URL = "https://barkadahub.com";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Tambay Games — Free Filipino Party Games",
-    template: "%s | Tambay Games",
+    default: "Barkada Hub — Free Party Games",
+    template: "%s | Barkada Hub",
   },
   description:
     "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more. No login needed. Play on one phone!",
@@ -28,16 +28,16 @@ export const metadata: Metadata = {
     "laruan para sa barkada",
     "henyo game",
   ],
-  authors: [{ name: "Tambay Games" }],
-  creator: "Tambay Games",
-  publisher: "Tambay Games",
+  authors: [{ name: "Barkada Hub" }],
+  creator: "Barkada Hub",
+  publisher: "Barkada Hub",
   openGraph: {
     type: "website",
     locale: "fil_PH",
     alternateLocale: ["en_US"],
     url: BASE_URL,
-    siteName: "Tambay Games",
-    title: "Tambay Games — Free Filipino Party Games",
+    siteName: "Barkada Hub",
+    title: "Barkada Hub — Free Party Games",
     description:
       "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more. No login needed.",
     images: [
@@ -45,13 +45,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Tambay Games — Free Filipino Party Games",
+        alt: "Barkada Hub — Free Filipino Party Games",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tambay Games — Free Filipino Party Games",
+    title: "Barkada Hub — Free Filipino Party Games",
     description:
       "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more. No login needed.",
     images: ["/og-image.png"],
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Tambay Games",
+  name: "Barkada Hub",
   url: "https://barkadahub.com",
   description:
     "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more.",

@@ -1,6 +1,6 @@
 const STATS = [
-  { num: "15+", label: "Games" },
-  { num: "2–30", label: "Players" },
+  { num: "3+", label: "Games" },
+  { num: "2 - 8", label: "Players" },
   { num: "0", label: "Downloads needed" },
   { num: "Free", label: "Forever" },
 ];
