@@ -43,7 +43,7 @@ export const metadata: Metadata = {
       "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more. No login needed.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Barkada Hub — Free Filipino Party Games",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Barkada Hub — Free Filipino Party Games",
     description:
       "Free Filipino party games for barkada — Pinoy Henyo, Who's the Impostor, Werewolf, and more. No login needed.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
