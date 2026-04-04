@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useWerewolfGame } from "@/hooks/useWerewolfGame";
 import { DayAnnouncementScreen } from "./DayAnnouncementScreen";
 import { DayVoteScreen } from "./DayVoteScreen";
@@ -39,8 +40,18 @@ export const WerewolfGame = () => {
     leaveRoom,
   } = game;
 
+  const [showReconnectBanner, setShowReconnectBanner] = useState(false);
+  useEffect(() => {
+    if (isConnected) {
+      setShowReconnectBanner(false);
+      return;
+    }
+    const timer = setTimeout(() => setShowReconnectBanner(true), 1500);
+    return () => clearTimeout(timer);
+  }, [isConnected]);
+
   const reconnectBanner =
-    !isConnected && room ? (
+    showReconnectBanner && room ? (
       <div className="fixed top-0 inset-x-0 z-50 bg-yellow-600 text-white text-center py-2 text-sm font-medium">
         Reconnecting...
       </div>
