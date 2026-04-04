@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 const getSupabase = () => {
   try {
     const { supabase } = require("@/lib/supabase") as {
@@ -45,7 +47,11 @@ export const GET = async () => {
       }));
 
       return Response.json({ categories });
-    } catch {
+    } catch (err) {
+      logger.error("Supabase query failed: henyo categories", err, {
+        route: "/api/henyo/categories",
+        method: "GET",
+      });
       // fall through to static fallback
     }
   }

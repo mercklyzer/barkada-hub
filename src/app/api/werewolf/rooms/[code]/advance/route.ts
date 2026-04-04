@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { WerewolfGamePhase } from "@/types/werewolf";
 
@@ -43,7 +44,21 @@ export const POST = async (
     updates.eliminated_player_id = null;
   }
 
-  await supabaseAdmin.from("werewolf_rooms").update(updates).eq("id", room.id);
+  const { error: updateError } = await supabaseAdmin
+    .from("werewolf_rooms")
+    .update(updates)
+    .eq("id", room.id);
+
+  if (updateError) {
+    logger.error("Failed to advance game phase", updateError, {
+      route: `/api/werewolf/rooms/${code}/advance`,
+      method: "POST",
+      statusCode: 500,
+      errorCode: updateError.code,
+      metadata: { roomId: room.id, fromPhase: room.phase, toPhase: nextPhase },
+    });
+    return Response.json({ error: "Failed to advance phase" }, { status: 500 });
+  }
 
   return Response.json({ success: true, nextPhase });
 };

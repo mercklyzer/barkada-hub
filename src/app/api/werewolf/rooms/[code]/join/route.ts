@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export const POST = async (
@@ -68,6 +69,15 @@ export const POST = async (
 
   if (playerError || !player) {
     const isDuplicate = playerError?.code === "23505";
+    if (!isDuplicate) {
+      logger.error("Failed to insert player on join", playerError, {
+        route: `/api/werewolf/rooms/${code}/join`,
+        method: "POST",
+        statusCode: 500,
+        errorCode: playerError?.code,
+        metadata: { roomId: room.id },
+      });
+    }
     return Response.json(
       { error: isDuplicate ? "Name already taken" : "Failed to join" },
       { status: isDuplicate ? 409 : 500 },

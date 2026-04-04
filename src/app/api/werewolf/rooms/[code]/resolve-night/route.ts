@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { checkWinCondition, resolveNight } from "@/lib/werewolf/nightResolver";
 import type { NightAction, WerewolfPlayer } from "@/types/werewolf";
@@ -48,11 +49,21 @@ export const POST = async (
   let updatedPlayers = [...(players ?? [])] as WerewolfPlayer[];
 
   if (killedPlayerId) {
-    await supabaseAdmin
+    const { error: killError } = await supabaseAdmin
       .from("werewolf_players")
       .update({ is_alive: false })
       .eq("room_id", room.id)
       .eq("player_id", killedPlayerId);
+
+    if (killError) {
+      logger.error("Failed to mark player as killed", killError, {
+        route: `/api/werewolf/rooms/${code}/resolve-night`,
+        method: "POST",
+        statusCode: 500,
+        errorCode: killError.code,
+        metadata: { roomId: room.id, killedPlayerId },
+      });
+    }
 
     updatedPlayers = updatedPlayers.map((p) =>
       p.player_id === killedPlayerId ? { ...p, is_alive: false } : p,
@@ -76,7 +87,7 @@ export const POST = async (
       : {}),
   };
 
-  await supabaseAdmin
+  const { error: finalUpdateError } = await supabaseAdmin
     .from("werewolf_rooms")
     .update({
       phase: winner ? "game_over" : "day_announcement",
@@ -87,6 +98,17 @@ export const POST = async (
       settings: newSettings,
     })
     .eq("id", room.id);
+
+  if (finalUpdateError) {
+    logger.error("Failed to finalize night resolution", finalUpdateError, {
+      route: `/api/werewolf/rooms/${code}/resolve-night`,
+      method: "POST",
+      statusCode: 500,
+      errorCode: finalUpdateError.code,
+      metadata: { roomId: room.id, killedPlayerId, winner },
+    });
+    return Response.json({ error: "Failed to resolve night" }, { status: 500 });
+  }
 
   return Response.json({
     success: true,

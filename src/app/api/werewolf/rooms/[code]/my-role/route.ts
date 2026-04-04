@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { MyRoleResponse, WerewolfRole } from "@/types/werewolf";
 
@@ -12,23 +13,43 @@ export const GET = async (
   if (!playerId)
     return Response.json({ error: "playerId required" }, { status: 400 });
 
-  const { data: room } = await supabaseAdmin
+  const { data: room, error: roomError } = await supabaseAdmin
     .from("werewolf_rooms")
     .select("id")
     .eq("room_code", code.toUpperCase())
     .maybeSingle();
 
-  if (!room) return Response.json({ error: "Room not found" }, { status: 404 });
+  if (!room) {
+    if (roomError) {
+      logger.error("Failed to fetch room in my-role", roomError, {
+        route: `/api/werewolf/rooms/${code}/my-role`,
+        method: "GET",
+        statusCode: 404,
+        errorCode: roomError.code,
+      });
+    }
+    return Response.json({ error: "Room not found" }, { status: 404 });
+  }
 
-  const { data: me } = await supabaseAdmin
+  const { data: me, error: meError } = await supabaseAdmin
     .from("werewolf_players")
     .select("role")
     .eq("room_id", room.id)
     .eq("player_id", playerId)
     .maybeSingle();
 
-  if (!me?.role)
+  if (!me?.role) {
+    if (meError) {
+      logger.error("Failed to fetch player role", meError, {
+        route: `/api/werewolf/rooms/${code}/my-role`,
+        method: "GET",
+        statusCode: 404,
+        errorCode: meError.code,
+        metadata: { roomId: room.id },
+      });
+    }
     return Response.json({ error: "Player not found" }, { status: 404 });
+  }
 
   const role = me.role as WerewolfRole;
   const response: MyRoleResponse = { role };

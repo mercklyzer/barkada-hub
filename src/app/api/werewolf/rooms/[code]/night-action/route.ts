@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { SeerPeekResult, WerewolfRole } from "@/types/werewolf";
 
@@ -40,6 +41,13 @@ export const POST = async (
   );
 
   if (error) {
+    logger.error("Failed to upsert night action", error, {
+      route: `/api/werewolf/rooms/${code}/night-action`,
+      method: "POST",
+      statusCode: 500,
+      errorCode: error.code,
+      metadata: { roomId: room.id, playerId, actionType },
+    });
     return Response.json({ error: "Failed to submit action" }, { status: 500 });
   }
 

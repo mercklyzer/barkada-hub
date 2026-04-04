@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { assignWerewolfRoles } from "@/lib/werewolf/roleAssigner";
 
@@ -41,19 +42,41 @@ export const POST = async (
       .update({ role: roleMap[p.player_id] })
       .eq("id", p.id),
   );
-  await Promise.all(updates);
+
+  try {
+    await Promise.all(updates);
+  } catch (err) {
+    logger.error("Failed to assign roles to players", err, {
+      route: `/api/werewolf/rooms/${code}/start`,
+      method: "POST",
+      statusCode: 500,
+      metadata: { roomId: room.id, playerCount: players.length },
+    });
+    return Response.json({ error: "Failed to assign roles" }, { status: 500 });
+  }
 
   const wolfCount = Object.values(roleMap).filter(
     (r) => r === "werewolf",
   ).length;
 
-  await supabaseAdmin
+  const { error: roomUpdateError } = await supabaseAdmin
     .from("werewolf_rooms")
     .update({
       phase: "role_reveal",
       settings: { werewolfCount: wolfCount },
     })
     .eq("id", room.id);
+
+  if (roomUpdateError) {
+    logger.error("Failed to advance room to role_reveal", roomUpdateError, {
+      route: `/api/werewolf/rooms/${code}/start`,
+      method: "POST",
+      statusCode: 500,
+      errorCode: roomUpdateError.code,
+      metadata: { roomId: room.id },
+    });
+    return Response.json({ error: "Failed to start game" }, { status: 500 });
+  }
 
   return Response.json({ success: true });
 };

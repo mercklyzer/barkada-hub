@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { checkWinCondition } from "@/lib/werewolf/nightResolver";
 import { resolveVotes } from "@/lib/werewolf/voteResolver";
@@ -42,6 +43,13 @@ export const POST = async (
     );
 
   if (voteError) {
+    logger.error("Failed to upsert day vote", voteError, {
+      route: `/api/werewolf/rooms/${code}/day-vote`,
+      method: "POST",
+      statusCode: 500,
+      errorCode: voteError.code,
+      metadata: { roomId: room.id, playerId, targetId },
+    });
     return Response.json({ error: "Failed to submit vote" }, { status: 500 });
   }
 
@@ -74,11 +82,21 @@ export const POST = async (
   let eliminatedPlayer: WerewolfPlayer | null = null;
 
   if (eliminatedId) {
-    await supabaseAdmin
+    const { error: eliminateError } = await supabaseAdmin
       .from("werewolf_players")
       .update({ is_alive: false })
       .eq("room_id", room.id)
       .eq("player_id", eliminatedId);
+
+    if (eliminateError) {
+      logger.error("Failed to eliminate player after vote", eliminateError, {
+        route: `/api/werewolf/rooms/${code}/day-vote`,
+        method: "POST",
+        statusCode: 500,
+        errorCode: eliminateError.code,
+        metadata: { roomId: room.id, eliminatedId },
+      });
+    }
 
     eliminatedPlayer =
       updatedPlayers.find((p) => p.player_id === eliminatedId) ?? null;
@@ -103,7 +121,7 @@ export const POST = async (
       : {}),
   };
 
-  await supabaseAdmin
+  const { error: roomUpdateError } = await supabaseAdmin
     .from("werewolf_rooms")
     .update({
       phase: winner ? "game_over" : "elimination",
@@ -112,6 +130,21 @@ export const POST = async (
       settings: newSettings,
     })
     .eq("id", room.id);
+
+  if (roomUpdateError) {
+    logger.error(
+      "Failed to update room after day vote resolution",
+      roomUpdateError,
+      {
+        route: `/api/werewolf/rooms/${code}/day-vote`,
+        method: "POST",
+        statusCode: 500,
+        errorCode: roomUpdateError.code,
+        metadata: { roomId: room.id, eliminatedId, winner },
+      },
+    );
+    return Response.json({ error: "Failed to resolve votes" }, { status: 500 });
+  }
 
   return Response.json({ success: true, resolved: true, eliminatedId, winner });
 };

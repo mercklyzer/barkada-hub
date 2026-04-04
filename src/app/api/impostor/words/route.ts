@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import fallbackWords from "@/lib/impostor/fallback-words.json";
+import { logger } from "@/lib/logger";
 import type { ImpostorWord } from "@/types/impostor";
 
 const getSupabase = () => {
@@ -65,7 +66,12 @@ export const GET = async (request: NextRequest) => {
           },
         },
       );
-    } catch {
+    } catch (err) {
+      logger.error("Supabase query failed: impostor words", err, {
+        route: "/api/impostor/words",
+        method: "GET",
+        metadata: { category, language, limit },
+      });
       // fall through to fallback
     }
   }

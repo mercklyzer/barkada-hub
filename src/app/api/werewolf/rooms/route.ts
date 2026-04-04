@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { generateRoomCode } from "@/lib/werewolf/roomCodeGenerator";
 
@@ -37,7 +38,12 @@ export const POST = async (request: NextRequest) => {
     .single();
 
   if (roomError || !room) {
-    console.log(roomError)
+    logger.error("Failed to create werewolf room", roomError, {
+      route: "/api/werewolf/rooms",
+      method: "POST",
+      statusCode: 500,
+      errorCode: roomError?.code,
+    });
     return Response.json({ error: "Failed to create room" }, { status: 500 });
   }
 
@@ -54,6 +60,13 @@ export const POST = async (request: NextRequest) => {
     .single();
 
   if (playerError || !player) {
+    logger.error("Failed to create host player", playerError, {
+      route: "/api/werewolf/rooms",
+      method: "POST",
+      statusCode: 500,
+      errorCode: playerError?.code,
+      metadata: { roomId: room.id },
+    });
     await supabaseAdmin.from("werewolf_rooms").delete().eq("id", room.id);
     return Response.json({ error: "Failed to create player" }, { status: 500 });
   }

@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { logger } from "@/lib/logger";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export const GET = async (
@@ -14,6 +15,14 @@ export const GET = async (
     .maybeSingle();
 
   if (roomError || !room) {
+    if (roomError) {
+      logger.error("Failed to fetch werewolf room", roomError, {
+        route: `/api/werewolf/rooms/${code}`,
+        method: "GET",
+        statusCode: 404,
+        errorCode: roomError.code,
+      });
+    }
     return Response.json({ error: "Room not found" }, { status: 404 });
   }
 
@@ -26,6 +35,13 @@ export const GET = async (
     .order("seat_order", { ascending: true });
 
   if (playersError) {
+    logger.error("Failed to fetch werewolf players", playersError, {
+      route: `/api/werewolf/rooms/${code}`,
+      method: "GET",
+      statusCode: 500,
+      errorCode: playersError.code,
+      metadata: { roomId: room.id },
+    });
     return Response.json({ error: "Failed to fetch players" }, { status: 500 });
   }
 

@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import fallbackWords from "@/lib/henyo/fallback-words.json";
+import { logger } from "@/lib/logger";
 import type { HenyoWord } from "@/types/henyo";
 
 const getSupabase = () => {
@@ -61,7 +62,12 @@ export const GET = async (request: NextRequest) => {
           },
         },
       );
-    } catch {
+    } catch (err) {
+      logger.error("Supabase query failed: henyo words", err, {
+        route: "/api/henyo/words",
+        method: "GET",
+        metadata: { category, limit },
+      });
       // fall through to fallback
     }
   }
